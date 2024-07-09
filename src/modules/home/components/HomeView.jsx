@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './Navbar';
+import Navbar from '../../core/components/Navbar';
 import SideBar from './SideBar';
 import useSideBarState from '../states/useSideBarState';
 
@@ -8,7 +8,7 @@ const HomeView = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <Navbar sidebarMenu={sidebarMenu} />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-row">
         <SideBar control={control} />
       </div>
     </div>

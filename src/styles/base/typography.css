@@ -19,3 +19,20 @@
 /* .sidebar-hover {
   color: #ff8c6f2c;
 } */
+
+.hover-bg-color {
+  background-color: #ff8c6f2c;
+}
+
+.hover-text-color {
+  color: #ff4500;
+}
+
+.active-link {
+  background-color: #ff8c6f2c;
+  color: #ff4500;
+}
+
+.active-link .fa-icon {
+  color: var(--hover-text-color); 
+}
