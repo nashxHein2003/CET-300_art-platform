@@ -1,7 +1,7 @@
 import { faChartArea, faEye, faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const SideBar = ({ control }) => {
@@ -16,18 +16,23 @@ const SideBar = ({ control }) => {
           className="group block p-5 hover:bg-dark-primary-hover"
           key={index}
         >
-          <Link to={url} className="flex flex-row items-stretch gap-x-3">
+          <NavLink
+            to={url}
+            className="flex flex-row items-stretch gap-x-3"
+            activeClassName="active-link"
+            exact
+          >
             <FontAwesomeIcon
               icon={iconName}
               size="md"
               className="text-white group-hover:text-dark-primary"
             />
             <span
-              className={`${control.isExpanded ? 'hidden' : ''} sidebar-text group-hover:text-dark-primary`}
+              className={`${control.isExpanded ? '' : 'hidden'} sidebar-text group-hover:text-dark-primary`}
             >
               {title}
             </span>
-          </Link>
+          </NavLink>
         </div>
       ))}
     </div>
