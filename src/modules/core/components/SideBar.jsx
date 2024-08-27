@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const SideBar = ({ control }) => {
   return (
-    <div className=" bg-dark-primary-theme h-full fixed">
+    <div className=" bg-dark-primary-theme h-full fixed z-10">
       {[
         [faHome, './home', 'Home'],
         [faEye, './follow', 'Following'],
