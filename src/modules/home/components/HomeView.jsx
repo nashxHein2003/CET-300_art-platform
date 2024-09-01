@@ -12,7 +12,7 @@ const HomeView = () => {
       <div className="flex-1 flex flex-row relative">
         <SideBar control={control} />
         <div className="w-14 h-lvh bg-dark-lighter-theme z-0"></div>
-        <div className="flex-1 h-lvh bg-dark-lighter-theme p-5 ">
+        <div className="flex-1 h-full bg-dark-lighter-theme p-5 ">
           <ImageWrapper />
         </div>
       </div>
