@@ -11,6 +11,9 @@ module.exports = {
       textColor: {
         'dark-primary': '#ff4500',
       },
+      scale: {
+        50: '0.5',
+      },
     },
   },
   plugins: [],

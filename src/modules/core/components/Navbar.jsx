@@ -19,7 +19,7 @@ const Navbar = ({ sidebarMenu }) => {
         <span className="logo-text">CenturyArt</span>
       </div>
 
-      <div className="flex flex-row items-center">
+      <div className="flex flex-row  w-1/3items-center">
         <button className="mx-5">
           <span className="text-white hover:text-dark-primary">Join</span>
         </button>

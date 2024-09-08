@@ -23,19 +23,19 @@ const ImageWrapper = () => {
 
   return (
     <div className="flex-1 h-full">
-      <div className="w-full flex flex-row gap-3 flex-wrap items-start justify-start">
+      <div className="w-full flex flex-row gap-2 flex-wrap items-start justify-start">
         {art &&
           art.length > 0 &&
           art.map((artDetail) => (
             <Link
               key={artDetail.artwork_id}
               to={`/artdetail/${artDetail.artwork_id}`}
-              className="h-52  flex-shrink flex-grow"
+              className="h-48  flex-shrink flex-grow group overflow-hidden"
             >
               <img
                 src={artDetail.image_url}
                 alt={`Art piece #${artDetail.artwork_id}`}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition group-hover:scale-105 brightness-90"
               />
             </Link>
           ))}
