@@ -23,14 +23,14 @@ const ImageWrapper = () => {
 
   return (
     <div className="flex-1 h-full">
-      <div className="w-full flex flex-row gap-2 flex-wrap items-start justify-start">
+      <div className="w-full h-full flex flex-row gap-2 flex-wrap items-start justify-start">
         {art &&
           art.length > 0 &&
           art.map((artDetail) => (
             <Link
               key={artDetail.artwork_id}
               to={`/artdetail/${artDetail.artwork_id}`}
-              className="h-48  flex-shrink flex-grow group overflow-hidden"
+              className="h-60  flex-shrink flex-grow group overflow-hidden max-w-md"
             >
               <img
                 src={artDetail.image_url}

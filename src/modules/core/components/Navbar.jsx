@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ sidebarMenu }) => {
+  const navigate = useNavigate();
   return (
-    <div className="w-full h-20 bg-dark-primary-theme flex flex-row items-center px-5 fixed top-0 z-10">
+    <div className="w-full h-20 bg-dark-primary-theme flex flex-row items-center px-6 fixed top-0 z-10">
       <button onClick={sidebarMenu}>
         <FontAwesomeIcon
           icon={faBars}
@@ -15,15 +17,18 @@ const Navbar = ({ sidebarMenu }) => {
         />
       </button>
 
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex ml-10 justify-start items-center">
         <span className="logo-text">CenturyArt</span>
       </div>
 
-      <div className="flex flex-row  w-1/3items-center">
-        <button className="mx-5">
-          <span className="text-white hover:text-dark-primary">Join</span>
-        </button>
-        <button className="mx-5">
+      <div className="flex flex-row items-center justify-end">
+        <Link to={'/login'}>
+          <button className="mx-5">
+            <span className="text-white hover:text-dark-primary">Join</span>
+          </button>
+        </Link>
+
+        <button className="mx-5" onClick={() => navigate('/login')}>
           <span className="text-white hover:text-dark-primary">Log In</span>
         </button>
         <button className="mx-5 px-3 py-2 bg-dark-lighter-theme rounded-lg">

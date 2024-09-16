@@ -13,7 +13,7 @@ const SideBar = ({ control }) => {
         [faChartArea, './activity', 'Activity'],
       ].map(([iconName, url, title], index) => (
         <div
-          className="group block p-5 hover:bg-dark-primary-hover"
+          className={`transition-width duration-500 group ${control.isExpanded ? 'w-60' : ''} p-6 hover:bg-dark-primary-hover`}
           key={index}
         >
           <NavLink
@@ -28,7 +28,7 @@ const SideBar = ({ control }) => {
               className="text-white group-hover:text-dark-primary"
             />
             <span
-              className={`${control.isExpanded ? '' : 'hidden'} sidebar-text group-hover:text-dark-primary`}
+              className={`${control.isExpanded ? '' : 'hidden'} ml-3 sidebar-text font-light group-hover:text-dark-primary`}
             >
               {title}
             </span>
