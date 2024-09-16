@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomeView from '../modules/home/components/HomeView';
-import LoginView from '../modules/auth/pages/LoginView';
-import RegisterView from '../modules/auth/pages/RegisterView';
+import HomeView from '../features/Home/HomeView';
+import LoginView from '../features/Auth/Login/LoginView';
+import RegisterView from '../features/Auth/Register/RegisterView';
 
 const AppRoute = () => {
   return (
