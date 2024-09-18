@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import useSideBarState from '../../hooks/useSideBarState';
 import SideBar from '../../components/Sidebar/SideBar';
 import ArtworkGallery from '../Artwork/ArtworkGallery/ArtworkGallery';
-import { PropTypes } from 'prop-types';
+import AppLayout from '../../components/ Layout/AppLayout';
 
 const HomeView = () => {
   const { control, sidebarMenu } = useSideBarState();
@@ -19,18 +19,6 @@ const HomeView = () => {
       </div>
     </AppLayout>
   );
-};
-
-const AppLayout = ({ children }) => {
-  return (
-    <div className="w-full h-full flex flex-col relative mt-20 bg-dark-lighter-theme">
-      {children}
-    </div>
-  );
-};
-
-AppLayout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default HomeView;

@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Navbar = ({ sidebarMenu }) => {
   const navigate = useNavigate();
   return (
-    <div className="w-full h-20 bg-dark-primary-theme flex flex-row items-center px-6 fixed top-0 z-10">
+    <div className="w-full h-20 bg-dark-primary-theme flex flex-row items-center px-6 fixed top-0 z-10 border-b-1 border-b-grey">
       <button onClick={sidebarMenu}>
         <FontAwesomeIcon
           icon={faBars}

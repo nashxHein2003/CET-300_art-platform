@@ -29,7 +29,7 @@ const ArtworkGallery = () => {
           art.map((artDetail) => (
             <Link
               key={artDetail.artwork_id}
-              to={`/artdetail/${artDetail.artwork_id}`}
+              to={`/artworkDetail/${artDetail.artwork_id}`}
               className="h-60  flex-shrink flex-grow group overflow-hidden max-w-md"
             >
               <img
