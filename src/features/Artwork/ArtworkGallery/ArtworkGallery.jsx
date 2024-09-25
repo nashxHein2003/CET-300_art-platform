@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { fetchArt } from '../../../api/fetchArt';
+import { fetchArt } from '../../../services/fetchArt';
 import { Link } from 'react-router-dom';
 
-const ImageWrapper = () => {
+const ArtworkGallery = () => {
   const [art, setArt] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ const ImageWrapper = () => {
           art.map((artDetail) => (
             <Link
               key={artDetail.artwork_id}
-              to={`/artdetail/${artDetail.artwork_id}`}
+              to={`/artworkDetail/${artDetail.artwork_id}`}
               className="h-60  flex-shrink flex-grow group overflow-hidden max-w-md"
             >
               <img
@@ -44,4 +44,4 @@ const ImageWrapper = () => {
   );
 };
 
-export default ImageWrapper;
+export default ArtworkGallery;

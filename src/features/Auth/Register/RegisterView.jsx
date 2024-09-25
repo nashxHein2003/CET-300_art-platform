@@ -5,10 +5,10 @@ import {
   AppleIcon,
   FacebookIcon,
   GoogleIcon,
-} from '../../core/components/Icons';
+} from '../../../components/Icons/Icons';
 import { Link, useNavigate } from 'react-router-dom';
 
-const LoginView = () => {
+const RegisterView = () => {
   const navigate = useNavigate();
   return (
     <div className="w-full h-lvh bg-dark-primary-theme grid place-items-center">
@@ -17,7 +17,7 @@ const LoginView = () => {
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
         <div className="relative w-1/2 p-6 flex flex-col items-end">
-          <Link className="mb-10" to={'/'}>
+          <Link className="mb-10">
             <FontAwesomeIcon
               icon={faTimes}
               size="2x"
@@ -26,33 +26,25 @@ const LoginView = () => {
           </Link>
 
           <div className="w-full px-5 flex flex-col">
-            <h1 className="text-4xl font-bold mb-10">Login CenturyArt</h1>
+            <h1 className="text-4xl font-bold mb-10">Join CenturyArt</h1>
             <div className="flex flex-col">
               <label htmlFor="title" className="text-sm font-bold">
-                Enter your Email
+                Add your Email
               </label>
               <input type="gmail" className="w-auto p-2 border mt-1 mb-3" />
               <label htmlFor="title" className="text-sm font-bold">
-                Enter your password
+                Choose your password
               </label>
               <input type="password" className="w-full p-2 border mt-1 mb-3" />
               <div className="w-full flex flex-row mb-3  relative">
                 <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox h-3 w-3 text-blue-600"
-                  />
-                  <span className="ml-2 text-sm text-black">
-                    Keep me logged in
-                  </span>
-
-                  <span className="absolute right-0 text-xs text-gray-600 underline">
-                    Forgot username or password?
+                  <span className="text-xs text-gray-500">
+                    Min 6 characters, numbers & letters
                   </span>
                 </label>
               </div>
               <button className="w-full p-3 bg-dark-primary text-sm text-white">
-                LOGIN
+                Continue with Email
               </button>
             </div>
 
@@ -66,37 +58,37 @@ const LoginView = () => {
               <button className="relative flex items-center w-full p-3 border mb-3">
                 <GoogleIcon className="absolute left-0" />
                 <span className="w-full text-center text-sm">
-                  Login with Google
+                  Continue with Google
                 </span>
               </button>
 
               <button className="relative flex items-center w-full p-3 border mb-3">
                 <FacebookIcon className="absolute left-0" />
                 <span className="w-full text-center text-sm">
-                  Login with Facebook
+                  Continue with Facebook
                 </span>
               </button>
 
               <button className="relative flex items-center w-full p-3 border mb-3">
                 <AppleIcon className="absolute left-0" />
                 <span className="w-full text-center text-sm">
-                  Login with Apple
+                  Continue with Apple
                 </span>
               </button>
 
               <p className="text-xs font-normal flex items-center">
-                To be part of community
-                <button className="ml-2" onClick={() => navigate('/register')}>
+                Already a member?
+                <button className="ml-2" onClick={() => navigate('/login')}>
                   <span className="text-sm font-bold text-dark-primary ">
-                    Join CenturyArt
+                    Log in your account
                   </span>
                 </button>
               </p>
 
               <p className="text-xs font-normal text-gray-600 mt-12">
-                By logging in to CenturyArt, I confirm that I have read and
-                agree to the CenturyArt Terms of Service, Privacy Policy, and to
-                receive emails and updates.
+                By joining CenturyArt, I confirm that I have read and agree to
+                the CenturyArt Terms of Service, Privacy Policy, and to receive
+                emails and updates.
               </p>
             </div>
           </div>
@@ -106,4 +98,4 @@ const LoginView = () => {
   );
 };
 
-export default LoginView;
+export default RegisterView;
