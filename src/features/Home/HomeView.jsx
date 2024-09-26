@@ -13,7 +13,7 @@ const HomeView = () => {
       <div className="flex-1 flex flex-row relative">
         <SideBar control={control} />
         <div className="w-16 h-lvh bg-dark-lighter-theme z-0"></div>
-        <div className="flex-1 h-full px-5 py-3 ">
+        <div className="flex-1 w-full h-full bg-dark-lighter-theme px-5 py-3">
           <ArtworkGallery />
         </div>
       </div>
