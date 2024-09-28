@@ -1,8 +1,8 @@
-import { supabase } from './supaBase';
+import { supabaseClient } from './supaBase';
 
 export const fetchArt = async () => {
   try {
-    const { data, error } = await supabase.from('artworks').select();
+    const { data, error } = await supabaseClient.from('artworks').select();
 
     if (error) {
       throw error;

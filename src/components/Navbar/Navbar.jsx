@@ -22,7 +22,7 @@ const Navbar = ({ sidebarMenu }) => {
       </div>
 
       <div className="flex flex-row items-center justify-end">
-        <Link to={'/login'}>
+        <Link to={'/register'}>
           <button className="mx-5">
             <span className="text-white hover:text-dark-primary">Join</span>
           </button>

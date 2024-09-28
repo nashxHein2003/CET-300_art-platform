@@ -1,15 +1,53 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppleIcon,
   FacebookIcon,
   GoogleIcon,
 } from '../../../components/Icons/Icons';
 import { Link, useNavigate } from 'react-router-dom';
+import { supabaseClient } from '../../../services/supaBase';
+import PropTypes from 'prop-types';
+import { useAuth } from '../../../context/Auth/AuthContext';
 
-const LoginView = () => {
+const LoginView = ({ setToken }) => {
   const navigate = useNavigate();
+  const { saveToken } = useAuth();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  function handleChange(event) {
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [event.target.name]: event.target.value,
+      };
+    });
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        throw error;
+      }
+      if (data.session.access_token) {
+        saveToken(data.session.access_token);
+      }
+      navigate('/');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <div className="w-full h-lvh bg-dark-primary-theme grid place-items-center">
       <div className="w-1/2 h-5/6 bg-white flex flex-row">
@@ -27,15 +65,25 @@ const LoginView = () => {
 
           <div className="w-full px-5 flex flex-col">
             <h1 className="text-4xl font-bold mb-10">Login CenturyArt</h1>
-            <div className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
               <label htmlFor="title" className="text-sm font-bold">
                 Enter your Email
               </label>
-              <input type="gmail" className="w-auto p-2 border mt-1 mb-3" />
+              <input
+                type="email"
+                className="w-auto p-2 border mt-1 mb-3"
+                name="email"
+                onChange={handleChange}
+              />
               <label htmlFor="title" className="text-sm font-bold">
                 Enter your password
               </label>
-              <input type="password" className="w-full p-2 border mt-1 mb-3" />
+              <input
+                type="password"
+                className="w-full p-2 border mt-1 mb-3"
+                name="password"
+                onChange={handleChange}
+              />
               <div className="w-full flex flex-row mb-3  relative">
                 <label className="inline-flex items-center">
                   <input
@@ -51,10 +99,13 @@ const LoginView = () => {
                   </span>
                 </label>
               </div>
-              <button className="w-full p-3 bg-dark-primary text-sm text-white">
+              <button
+                className="w-full p-3 bg-dark-primary text-sm text-white"
+                type="submit"
+              >
                 LOGIN
               </button>
-            </div>
+            </form>
 
             <div className="relative w-full flex flex-row justify-center items-center mb-3 mt-6">
               <div className="flex-1 border-t border-gray-300"></div>
@@ -104,6 +155,10 @@ const LoginView = () => {
       </div>
     </div>
   );
+};
+
+LoginView.propTypes = {
+  setToken: PropTypes.func.isRequired,
 };
 
 export default LoginView;

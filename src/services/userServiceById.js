@@ -1,7 +1,7 @@
-import { supabase } from './supaBase';
+import { supabaseClient } from './supaBase';
 
 const userServiceById = async (id) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('users')
     .select('*')
     .eq('user_id', id)
