@@ -1,40 +1,66 @@
-// SyncUsers.js
 import React, { useEffect } from 'react';
 import { supabaseAdmin, supabaseClient } from '../supaBase';
 
 const SyncUsers = () => {
   const syncUsersToCustomTable = async () => {
     try {
-      // Fetch users from the authentication table
       const { data: authUsers, error: fetchError } =
         await supabaseAdmin.auth.admin.listUsers();
       if (fetchError) throw fetchError;
 
-      // Loop through each user and insert them into the custom user table
       for (const user of authUsers.users) {
         const { email, id } = user;
+        let baseUsername = email.split('@')[0];
 
-        // Check if the user already exists in the custom users table
         const { data: existingUser, error: existingUserError } =
           await supabaseClient.from('user').select('*').eq('user_id', id);
 
         if (!existingUser || existingUser.length === 0) {
-          // Insert new user into the custom users table with a default username
+          let finalUsername = baseUsername;
+          let counter = 1;
+          let usernameExists = true;
+
+          while (usernameExists) {
+            const { data: existingUsername, error: usernameError } =
+              await supabaseClient
+                .from('user')
+                .select('*')
+                .eq('username', finalUsername);
+
+            if (existingUsername) {
+              console.log(
+                `Found existing usernames for: ${finalUsername}`,
+                existingUsername
+              );
+            }
+
+            if (existingUsername && existingUsername.length > 0) {
+              finalUsername = `${baseUsername}_${counter}`;
+              counter++;
+            } else {
+              usernameExists = false;
+            }
+          }
           const { error: insertError } = await supabaseClient
             .from('user')
             .insert([
               {
                 email: email,
                 user_id: id,
-                username: email.split('@')[0], // Default username
-                known_as: email.split('@')[0], // Default known_as
+                username: finalUsername,
+                known_as: finalUsername,
               },
             ]);
 
           if (insertError) {
             console.error('Error inserting user:', insertError);
           } else {
-            console.log('Inserted user:', email);
+            console.log(
+              'Inserted user:',
+              email,
+              'with username:',
+              finalUsername
+            );
           }
         } else {
           console.log('User already exists:', email);
@@ -46,11 +72,10 @@ const SyncUsers = () => {
   };
 
   useEffect(() => {
-    // Call the function when the component mounts
     syncUsersToCustomTable();
   }, []);
 
-  return null; // This component doesn't render anything visible
+  return null;
 };
 
 export default SyncUsers;

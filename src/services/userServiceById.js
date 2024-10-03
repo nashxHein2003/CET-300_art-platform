@@ -2,9 +2,9 @@ import { supabaseClient } from './supaBase';
 
 const userServiceById = async (id) => {
   const { data, error } = await supabaseClient
-    .from('users')
+    .from('user')
     .select('*')
-    .eq('user_id', id)
+    .eq('id', id)
     .single();
 
   if (error) {

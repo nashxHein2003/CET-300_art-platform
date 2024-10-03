@@ -11,7 +11,7 @@ import { supabaseClient } from '../../../services/supaBase';
 import PropTypes from 'prop-types';
 import { useAuth } from '../../../context/Auth/AuthContext';
 
-const LoginView = ({ setToken }) => {
+const LoginView = () => {
   const navigate = useNavigate();
   const { saveToken } = useAuth();
 
@@ -157,8 +157,8 @@ const LoginView = ({ setToken }) => {
   );
 };
 
-LoginView.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
+// LoginView.propTypes = {
+//   setToken: PropTypes.func.isRequired,
+// };
 
 export default LoginView;

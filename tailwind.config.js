@@ -22,6 +22,7 @@ module.exports = {
       backgroundColor: {
         'dark-primary-theme': '#101010',
         'dark-lighter-theme': '#1a1a1a',
+        'dark-lighter-nav': '#1f1f1f',
         'dark-primary-hover': '#ff8c6f2c',
         'dark-primary': '#ff4500',
       },
@@ -39,9 +40,13 @@ module.exports = {
       },
       borderColor: {
         grey: '#8f8f8f',
+        'dark-primary': '#ff4500',
       },
       scale: {
         101: '1.01',
+      },
+      spacing: {
+        'scrollbar-gutter-stable': 'scrollbar-gutter: stable;',
       },
     },
   },

@@ -2,7 +2,7 @@ import { supabaseClient } from './supaBase';
 
 const artworkDetailService = async (artworkId) => {
   const { data, error } = await supabaseClient
-    .from('artworks')
+    .from('artwork')
     .select('*')
     .eq('artwork_id', artworkId)
     .single();

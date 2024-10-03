@@ -21,7 +21,7 @@ const ArtworkGallery = () => {
   const handleResize = () => {
     if (!containerRef.current) return;
 
-    const maxHeight = 240;
+    const maxHeight = 230;
     const images = Array.from(containerRef.current.getElementsByTagName('img'));
     const rows = [];
     let currentRow = [];

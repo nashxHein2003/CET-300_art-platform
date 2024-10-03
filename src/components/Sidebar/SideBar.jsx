@@ -1,46 +1,48 @@
-import { faChartArea, faEye, faHome } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartArea, faEye, faHome } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import { hover } from '@testing-library/user-event/dist/hover';
 
 const SideBar = ({ control }) => {
+  const location = useLocation();
+
+  const isHome = location.pathname === '/';
+
+  if (!isHome && !control.isExpanded) {
+    return null;
+  }
+
+  const menuItems = [
+    { icon: faHome, url: '/', title: 'Home' },
+    { icon: faEye, url: '/follow', title: 'Following' },
+    { icon: faChartArea, url: '/activity', title: 'Activity' },
+  ];
+
   return (
     <div
-      className={`${control.isExpanded ? 'w-60' : ''} bg-dark-primary-theme h-full fixed z-10`}
+      className={`${
+        control.isExpanded ? 'w-60' : 'w-16'
+      } bg-dark-primary-theme h-full fixed z-10 transition-width duration-300`}
     >
-      {[
-        [faHome, '/', 'Home'],
-        [faEye, '/follow', 'Following'],
-        [faChartArea, '/activity', 'Activity'],
-      ].map(([iconName, url, title], index) => (
+      {menuItems.map(({ icon, url, title }, index) => (
         <NavLink
           key={index}
           to={url}
           end
           className={({ isActive }) =>
-            `flex flex-row items-stretch gap-x-3 p-6 group ${
-              isActive ? 'active-link bg-dark-primary-hover' : ''
-            } hover:bg-dark-primary-hover`
+            `flex items-center gap-x-3 p-6 transition-colors duration-300 ${
+              isActive
+                ? 'bg-dark-primary-hover text-dark-primary'
+                : 'text-white'
+            } group hover:bg-dark-primary-hover`
           }
-          exact
         >
-          <FontAwesomeIcon
-            icon={iconName}
-            size="md"
-            className={`transition-colors duration-300 ${
-              window.location.pathname === url
-                ? 'text-dark-primary'
-                : 'text-white'
-            } `}
-          />
+          <FontAwesomeIcon icon={icon} size="md" />
           <span
-            className={`${control.isExpanded ? '' : 'hidden'} ml-3 sidebar-text font-lighter ${
-              window.location.pathname === url
-                ? 'text-dark-primary'
-                : 'text-white'
-            }`}
+            className={`${
+              control.isExpanded ? 'block' : 'hidden'
+            } ml-3 font-lighter sidebar-text transition-all duration-500`}
           >
             {title}
           </span>
