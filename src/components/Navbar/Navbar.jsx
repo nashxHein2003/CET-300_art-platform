@@ -2,14 +2,17 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/Auth/AuthContext';
+import { useUser } from '../../context/User/UserContext';
 
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const { token, userEmail, clearToken } = useAuth();
+  const { userInfo } = useUser();
+
   console.log('token:', token);
   console.log('email:', userEmail);
   return (
@@ -57,22 +60,35 @@ const Navbar = ({ toggleSidebar }) => {
 
           {token !== null && (
             <div
-              className={`absolute top-12 right-0 p-4 w-48 bg-dark-lighter-theme ease-in-out text-white rounded-lg transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+              className={`absolute top-12 right-0 w-72 space-y-2 overflow-hidden py-2 bg-dark-lighter-theme ease-in-out text-white rounded-lg transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
             >
-              <p className="mb-4">User Info</p>
               <button
-                className="w-full text-left py-1 px-2 hover:bg-dark-primary rounded-md"
+                className="w-full text-left text-lg font-bold px-4 py-3"
+                onClick={() => {
+                  if (token !== null) {
+                    navigate('/userProfile');
+                  }
+                }}
+              >
+                {userInfo.username}
+              </button>
+
+              <ModalTab
+                text="Logout"
                 onClick={() => {
                   clearToken();
                   setTimeout(() => {
                     navigate('/');
                   }, 0);
                 }}
-              >
-                Logout
-              </button>
+              />
             </div>
           )}
+        </button>
+
+        <button className="w-auto flex items-center px-6 py-2 text-white bg-dark-primary transition-colors duration-20 ">
+          <FontAwesomeIcon icon={faPlus} className="mr-2" />
+          Submit
         </button>
       </div>
     </div>
@@ -84,3 +100,19 @@ Navbar.propTypes = {
 };
 
 export default Navbar;
+
+const ModalTab = ({ text, onClick }) => {
+  return (
+    <button
+      className="w-full text-left text-sm px-4 py-3 hover:bg-dark-primary-hover"
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
+};
+
+ModalTab.propTypes = {
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
