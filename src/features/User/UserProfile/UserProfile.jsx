@@ -4,6 +4,8 @@ import { useAuth } from '../../../context/Auth/AuthContext';
 import fetchUserInfoByEmail from '../../../services/user/fetchUserInfoByEmail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
+import UserFeatured from '../UserFeatured/UserFeatured';
+import UserAbout from '../UserAbout/UserAbout';
 const UserProfile = () => {
   const { userEmail } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
@@ -74,7 +76,17 @@ const UserProfile = () => {
           <button>Shop</button>
         </div>
       </div>
-      <div className="flex-1 bg-dark-primary-theme"></div>
+
+      {/* This is for home tab */}
+      <div className="flex-1 bg-dark-primary-theme flex flex-row">
+        <div className="flex-1 flex flex-col">
+          <UserFeatured userId={userInfo.id} />
+        </div>
+
+        <div className="w-700 h-500">
+          <UserAbout userInfo={userInfo} />
+        </div>
+      </div>
     </div>
   );
 };
