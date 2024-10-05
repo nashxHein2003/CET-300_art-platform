@@ -3,11 +3,11 @@ import { useState } from 'react';
 const useSideBarState = () => {
   const [control, setControl] = useState({ isExpanded: false });
 
-  const sidebarMenu = () => {
+  const toggleSidebar = () => {
     setControl((prevState) => ({ isExpanded: !prevState.isExpanded }));
   };
 
-  return { control, sidebarMenu };
+  return { control, toggleSidebar };
 };
 
 export default useSideBarState;

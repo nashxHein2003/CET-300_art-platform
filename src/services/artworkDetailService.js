@@ -1,8 +1,8 @@
-import { supabase } from './supaBase';
+import { supabaseClient } from './supaBase';
 
 const artworkDetailService = async (artworkId) => {
-  const { data, error } = await supabase
-    .from('artworks')
+  const { data, error } = await supabaseClient
+    .from('artwork')
     .select('*')
     .eq('artwork_id', artworkId)
     .single();

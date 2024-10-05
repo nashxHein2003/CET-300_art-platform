@@ -1,15 +1,83 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppleIcon,
   FacebookIcon,
   GoogleIcon,
 } from '../../../components/Icons/Icons';
 import { Link, useNavigate } from 'react-router-dom';
+import { supabaseClient } from './../../../services/supaBase';
 
 const RegisterView = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  function handleChange(event) {
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [event.target.name]: event.target.value,
+      };
+    });
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      // Sign up the user using Supabase Auth
+      const { user, session, error } = await supabaseClient.auth.signUp(
+        {
+          email: formData.email,
+          password: formData.password,
+        },
+        {
+          redirectTo: 'http://localhost:3000', // You can set the redirect URL here (for after login).
+        }
+      );
+
+      if (error) {
+        throw error;
+      }
+
+      if (session) {
+        console.log('User session:', session);
+        alert('User registered without email confirmation required.');
+      }
+
+      // Check if user is successfully registered
+      if (user) {
+        console.log('User signed up:', user);
+
+        // Insert user information into the custom user table
+        const { data, error: dbError } = await supabaseClient
+          .from('user') // Replace with your actual table name
+          .insert([
+            {
+              user_id: user.id, // Link to the auth user by ID
+              email: formData.email,
+            },
+          ]);
+
+        if (dbError) {
+          console.error('Error inserting into user table:', dbError.message);
+          throw dbError; // Rethrow to catch in the outer error handler
+        }
+
+        console.log('User data successfully inserted into custom table:', data);
+
+        alert('Registration successful! Please check your email to confirm.');
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      alert(error.message);
+    }
+  };
+
   return (
     <div className="w-full h-lvh bg-dark-primary-theme grid place-items-center">
       <div className="w-1/2 h-5/6 bg-white flex flex-row">
@@ -17,7 +85,7 @@ const RegisterView = () => {
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
         <div className="relative w-1/2 p-6 flex flex-col items-end">
-          <Link className="mb-10">
+          <Link className="mb-10" to={'/'}>
             <FontAwesomeIcon
               icon={faTimes}
               size="2x"
@@ -27,15 +95,25 @@ const RegisterView = () => {
 
           <div className="w-full px-5 flex flex-col">
             <h1 className="text-4xl font-bold mb-10">Join CenturyArt</h1>
-            <div className="flex flex-col">
+            <form className="flex flex-col" onSubmit={handleSubmit}>
               <label htmlFor="title" className="text-sm font-bold">
                 Add your Email
               </label>
-              <input type="gmail" className="w-auto p-2 border mt-1 mb-3" />
+              <input
+                type="email"
+                name="email"
+                className="w-auto p-2 border mt-1 mb-3"
+                onChange={handleChange}
+              />
               <label htmlFor="title" className="text-sm font-bold">
                 Choose your password
               </label>
-              <input type="password" className="w-full p-2 border mt-1 mb-3" />
+              <input
+                type="password"
+                name="password"
+                className="w-full p-2 border mt-1 mb-3"
+                onChange={handleChange}
+              />
               <div className="w-full flex flex-row mb-3  relative">
                 <label className="inline-flex items-center">
                   <span className="text-xs text-gray-500">
@@ -43,10 +121,13 @@ const RegisterView = () => {
                   </span>
                 </label>
               </div>
-              <button className="w-full p-3 bg-dark-primary text-sm text-white">
+              <button
+                className="w-full p-3 bg-dark-primary text-sm text-white"
+                type="submit"
+              >
                 Continue with Email
               </button>
-            </div>
+            </form>
 
             <div className="relative w-full flex flex-row justify-center items-center mb-3 mt-6">
               <div className="flex-1 border-t border-gray-300"></div>

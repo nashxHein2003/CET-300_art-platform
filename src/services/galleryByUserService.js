@@ -1,8 +1,8 @@
-import { supabase } from './supaBase';
+import { supabaseClient } from './supaBase';
 
 const galleryByUserService = async (userId) => {
-  const { data, error } = await supabase
-    .from('artworks')
+  const { data, error } = await supabaseClient
+    .from('artwork')
     .select('*')
     .eq('user_id', userId);
 

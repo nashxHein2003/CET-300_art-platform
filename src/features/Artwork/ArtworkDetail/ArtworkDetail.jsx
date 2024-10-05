@@ -31,6 +31,7 @@ const ArtworkDetail = () => {
     const getDetail = async () => {
       try {
         setLoading(true);
+
         const data = await artworkDetailService(id);
         console.log(data);
         setArtwork(data);
@@ -58,6 +59,8 @@ const ArtworkDetail = () => {
   if (!artwork) {
     return <div>No artwork found</div>;
   }
+
+  console.log(artwork);
 
   return (
     <AppLayout>
