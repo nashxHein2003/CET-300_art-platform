@@ -7,29 +7,42 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
-
   useEffect(() => {
-    const storedToken = localStorage.getItem('token'); // Use localStorage here
+    const storedToken = localStorage.getItem('token');
+
     if (storedToken) {
       const parsedToken = JSON.parse(storedToken);
       setToken(parsedToken);
       const decodedToken = parseJwt(parsedToken);
-      setUserEmail(decodedToken?.email);
-      console.log('User email:', decodedToken?.email);
+
+      if (decodedToken && decodedToken.email) {
+        setUserEmail(decodedToken.email);
+        console.log('User email:', decodedToken.email);
+        console.log('User id:', decodedToken.sub);
+      } else {
+        console.error('Invalid token or missing email in token');
+      }
     }
   }, []);
 
   const saveToken = (userToken) => {
-    localStorage.setItem('token', JSON.stringify(userToken)); // Use localStorage here
+    localStorage.setItem('token', JSON.stringify(userToken));
     setToken(userToken);
     const decodedToken = parseJwt(userToken);
-    setUserEmail(decodedToken?.email); // Set user email after saving token
+
+    if (decodedToken && decodedToken.email) {
+      setUserEmail(decodedToken.email);
+      console.log('User email set:', decodedToken.email);
+    }
   };
 
   const clearToken = () => {
-    localStorage.removeItem('token'); // Use localStorage here
+    localStorage.removeItem('token');
     setToken(null);
-    setUserEmail(null); // Clear user email when logging out
+    setUserEmail(null);
+
+    console.log('clear token:', token);
+    console.log('clear email:', userEmail);
   };
 
   return (
