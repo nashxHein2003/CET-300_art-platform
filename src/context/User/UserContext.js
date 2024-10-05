@@ -1,4 +1,3 @@
-// UserContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from '../Auth/AuthContext';
 import fetchUserInfoByEmail from '../../services/user/fetchUserInfoByEmail';
@@ -9,27 +8,31 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const { userEmail } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUserInfo = async () => {
-      if (userEmail) {
-        setLoading(true);
-        try {
-          const data = await fetchUserInfoByEmail(userEmail);
-          setUserInfo(data);
-        } catch (error) {
-          console.error('Error fetching user info:', error);
-        } finally {
-          setLoading(false);
-        }
+      if (!userEmail) {
+        setUserInfo(null);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(true);
+      try {
+        console.log('Getting user info for:', userEmail);
+        const data = await fetchUserInfoByEmail(userEmail);
+        console.log('Fetched user data:', data);
+        setUserInfo(data);
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      } finally {
+        setLoading(false); // Stop loading in both success and error scenarios
       }
     };
 
     getUserInfo();
-  }, [userEmail]);
-
-  console.log('User context:', userInfo);
+  }, [userEmail]); // Only run if userEmail changes
 
   return (
     <UserContext.Provider value={{ userInfo, loading }}>

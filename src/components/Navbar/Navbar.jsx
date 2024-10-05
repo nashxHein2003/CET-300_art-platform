@@ -4,17 +4,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/Auth/AuthContext';
+import { AuthProvider, useAuth } from '../../context/Auth/AuthContext';
 import { useUser } from '../../context/User/UserContext';
 
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const { token, userEmail, clearToken } = useAuth();
-  const { userInfo } = useUser();
-
-  console.log('token:', token);
-  console.log('email:', userEmail);
+  //const { userInfo } = useUser();
+  //console.log('User info from nav', userInfo);
   return (
     <div className="w-full h-20 bg-dark-primary-theme flex flex-row items-center px-6 fixed top-0 z-10 border-b-1 border-b-grey">
       <button onClick={toggleSidebar}>
@@ -62,7 +60,7 @@ const Navbar = ({ toggleSidebar }) => {
             <div
               className={`absolute top-12 right-0 w-72 space-y-2 overflow-hidden py-2 bg-dark-lighter-theme ease-in-out text-white rounded-lg transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
             >
-              <button
+              {/* <button
                 className="w-full text-left text-lg font-bold px-4 py-3"
                 onClick={() => {
                   if (token !== null) {
@@ -71,7 +69,7 @@ const Navbar = ({ toggleSidebar }) => {
                 }}
               >
                 {userInfo.username}
-              </button>
+              </button> */}
 
               <ModalTab
                 text="Logout"

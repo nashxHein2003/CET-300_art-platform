@@ -42,6 +42,7 @@ const LoginView = () => {
       }
       if (data.session.access_token) {
         saveToken(data.session.access_token);
+        console.log('Token saved from login');
       }
       navigate('/');
     } catch (error) {
