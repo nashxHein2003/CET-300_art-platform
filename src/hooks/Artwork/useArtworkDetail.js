@@ -1,0 +1,49 @@
+// hooks/useArtworkDetail.js
+import { useState, useEffect } from 'react';
+import artworkDetailService from '../services/artworkDetailService';
+import userServiceById from '../services/userServiceById';
+import galleryByUserService from '../services/galleryByUserService';
+import fetchFollowerCount from '../services/follow/fetchFollowerCount';
+
+const useArtworkDetail = (id) => {
+  const [artwork, setArtwork] = useState(null);
+  const [user, setUser] = useState(null);
+  const [userArt, setUserArt] = useState([]);
+  const [follower, setFollower] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const artworkData = await artworkDetailService(id);
+        setArtwork(artworkData);
+        if (artworkData?.user_id) {
+          const userData = await userServiceById(artworkData.user_id);
+          const userArtworks = await galleryByUserService(artworkData.user_id);
+          setUser(userData);
+          setUserArt(userArtworks);
+        }
+      } catch (err) {
+        console.error('Error fetching artwork details', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (id) fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchFollower = async () => {
+      if (artwork?.user_id) {
+        const followerCount = await fetchFollowerCount(artwork.user_id);
+        setFollower(followerCount);
+      }
+    };
+    fetchFollower();
+  }, [artwork]);
+
+  return { artwork, user, userArt, follower, loading };
+};
+
+export default useArtworkDetail;

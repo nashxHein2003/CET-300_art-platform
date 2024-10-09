@@ -18,6 +18,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import userServiceById from '../../../services/userServiceById';
 import galleryByUserService from '../../../services/galleryByUserService';
 import fetchFollowerCount from '../../../services/follow/fetchFollowerCount';
+import fetchArtTags from '../../../services/tags/fetchArtTags';
 
 const ArtworkDetail = () => {
   const navigate = useNavigate();
@@ -29,6 +30,11 @@ const ArtworkDetail = () => {
   const [user, setUser] = useState([]);
   const [userArt, setUserArt] = useState([]);
   const [follower, setFollower] = useState([]);
+
+  async function getArtTags(artworkId) {
+    const getTag = await fetchArtTags(artworkId);
+  }
+
   useEffect(() => {
     const getDetail = async () => {
       try {
@@ -42,15 +48,8 @@ const ArtworkDetail = () => {
           setUser(userData || []);
           setUserArt(userArt || []);
         }
-        console.log(artwork.user_id);
-
-        if (artwork.user_id) {
-          console.log('Follower id:', artwork.user_id);
-          const follower = await fetchFollowerCount(artwork.user_id);
-          console.log('follower count', follower);
-        }
       } catch (err) {
-        console.log('Failed to load artwork details');
+        console.log('Failed to load artwork details', err);
       } finally {
         setLoading(false);
       }
@@ -59,7 +58,30 @@ const ArtworkDetail = () => {
     if (id) {
       getDetail();
     }
-  }, [id, artwork.user_id]);
+  }, [id]); // Dependency on id only
+
+  // Fetch artwork tags based on artwork_id
+  useEffect(() => {
+    if (artwork && artwork.artwork_id) {
+      getArtTags(artwork.artwork_id);
+    }
+  }, [artwork]); // Dependency on artwork.artwork_id
+
+  // Fetch follower count based on user_id
+  useEffect(() => {
+    const fetchFollower = async () => {
+      if (artwork && artwork.user_id) {
+        try {
+          const follower = await fetchFollowerCount(artwork.user_id);
+          setFollower(follower);
+        } catch (err) {
+          console.log('Error fetching follower count', err);
+        }
+      }
+    };
+
+    fetchFollower();
+  }, [artwork]);
 
   if (!artwork) {
     return <div>No artwork found</div>;
