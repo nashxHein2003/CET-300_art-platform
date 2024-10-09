@@ -17,32 +17,37 @@ import { faComment as fasComment } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import userServiceById from '../../../services/userServiceById';
 import galleryByUserService from '../../../services/galleryByUserService';
+import fetchFollowerCount from '../../../services/follow/fetchFollowerCount';
 
 const ArtworkDetail = () => {
   const navigate = useNavigate();
   const { control, sidebarMenu } = useSideBarState();
   const { id } = useParams();
 
-  const [artwork, setArtwork] = useState(null);
+  const [artwork, setArtwork] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState([]);
   const [userArt, setUserArt] = useState([]);
+  const [follower, setFollower] = useState([]);
   useEffect(() => {
     const getDetail = async () => {
       try {
         setLoading(true);
-
         const data = await artworkDetailService(id);
-        console.log(data);
         setArtwork(data);
 
         if (data && data.user_id) {
           const userData = await userServiceById(data.user_id);
           const userArt = await galleryByUserService(data.user_id);
-          console.log(userData);
-          console.log(userArt);
           setUser(userData || []);
           setUserArt(userArt || []);
+        }
+        console.log(artwork.user_id);
+
+        if (artwork.user_id) {
+          console.log('Follower id:', artwork.user_id);
+          const follower = await fetchFollowerCount(artwork.user_id);
+          console.log('follower count', follower);
         }
       } catch (err) {
         console.log('Failed to load artwork details');
@@ -54,13 +59,11 @@ const ArtworkDetail = () => {
     if (id) {
       getDetail();
     }
-  }, [id]);
+  }, [id, artwork.user_id]);
 
   if (!artwork) {
     return <div>No artwork found</div>;
   }
-
-  console.log(artwork);
 
   return (
     <AppLayout>

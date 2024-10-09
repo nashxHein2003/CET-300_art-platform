@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { faPlus, faUser } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '../../context/Auth/AuthContext';
 import { useUser } from '../../context/User/UserContext';
 
@@ -24,7 +24,9 @@ const Navbar = ({ toggleSidebar }) => {
       </button>
 
       <div className="flex-1 flex ml-10 justify-start items-center">
-        <span className="logo-text">CenturyArt</span>
+        <Link className="logo-text" to={'/'}>
+          CenturyArt
+        </Link>
       </div>
 
       <div className="flex flex-row items-center justify-end">
