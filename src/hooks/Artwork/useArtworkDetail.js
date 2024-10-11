@@ -1,13 +1,13 @@
 // hooks/useArtworkDetail.js
 import { useState, useEffect } from 'react';
-import artworkDetailService from '../services/artworkDetailService';
-import userServiceById from '../services/userServiceById';
-import galleryByUserService from '../services/galleryByUserService';
-import fetchFollowerCount from '../services/follow/fetchFollowerCount';
+import artworkDetailService from '../../services/artworkDetailService';
+import userServiceById from '../../services/userServiceById';
+import galleryByUserService from '../../services/galleryByUserService';
+import fetchFollowerCount from '../../services/follow/fetchFollowerCount';
 
 const useArtworkDetail = (id) => {
-  const [artwork, setArtwork] = useState(null);
-  const [user, setUser] = useState(null);
+  const [artwork, setArtwork] = useState([]);
+  const [user, setUser] = useState({});
   const [userArt, setUserArt] = useState([]);
   const [follower, setFollower] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,6 +21,7 @@ const useArtworkDetail = (id) => {
         if (artworkData?.user_id) {
           const userData = await userServiceById(artworkData.user_id);
           const userArtworks = await galleryByUserService(artworkData.user_id);
+          console.log('user data:', userData);
           setUser(userData);
           setUserArt(userArtworks);
         }

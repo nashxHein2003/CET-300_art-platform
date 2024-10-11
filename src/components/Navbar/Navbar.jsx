@@ -14,7 +14,7 @@ const Navbar = ({ toggleSidebar }) => {
   //const { userInfo } = useUser();
   //console.log('User info from nav', userInfo);
   return (
-    <div className="w-full h-20 bg-dark-primary-theme flex flex-row items-center px-6 fixed top-0 z-10 border-b-1 border-b-grey">
+    <div className="w-full h-16 bg-dark-primary-theme flex flex-row items-center px-6 fixed top-0 z-10 border-b-1 border-b-grey">
       <button onClick={toggleSidebar}>
         <FontAwesomeIcon
           icon={faBars}
@@ -86,7 +86,7 @@ const Navbar = ({ toggleSidebar }) => {
           )}
         </button>
 
-        <button className="w-auto flex items-center px-6 py-2 text-white bg-dark-primary transition-colors duration-20 ">
+        <button className="w-auto flex items-center px-6 py-2 text-white text-sm bg-dark-primary transition-colors duration-20 ">
           <FontAwesomeIcon icon={faPlus} className="mr-2" />
           Submit
         </button>

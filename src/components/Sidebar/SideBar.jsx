@@ -23,7 +23,7 @@ const SideBar = ({ control }) => {
     <div
       className={`${
         control.isExpanded ? 'w-60' : 'w-16'
-      } bg-dark-primary-theme h-full fixed z-10 transition-width duration-300`}
+      } bg-dark-primary-theme h-full fixed z-10 text-sm transition-width duration-300`}
     >
       {menuItems.map(({ icon, url, title }, index) => (
         <NavLink
