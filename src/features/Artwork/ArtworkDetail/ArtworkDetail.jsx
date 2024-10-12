@@ -12,6 +12,8 @@ import {
   UserGallery,
 } from './../../../components/export';
 import useArtworkTag from '../../../hooks/Artwork/useArtworkTag';
+import ArtworkStatus from '../../../components/Artwork/ArtworkStatus';
+import useArtworkLike from '../../../hooks/Artwork/useArtworkLike';
 
 const ArtworkDetail = () => {
   const { id } = useParams();
@@ -24,6 +26,8 @@ const ArtworkDetail = () => {
     loading: tagsLoading,
     error: tagsError,
   } = useArtworkTag(artwork.artwork_id);
+
+  const { like } = useArtworkLike(artwork.artwork_id);
 
   if (loading || tagsLoading) return <div>Loading...</div>;
   if (!artwork) return <div>No artwork found</div>;
@@ -40,12 +44,9 @@ const ArtworkDetail = () => {
           <ArtworkImage artwork={artwork} onBackClick={() => navigate('/')} />
           <div className="w-full h-full flex flex-col items-center bg-dark-primary-theme">
             <div className="w-900 h-750 flex flex-col">
-              <ArtworkHeader
-                artwork={artwork}
-                user={user}
-                follower={follower}
-              />
               <ArtworkActions artwork={artwork} />
+              <ArtworkHeader user={user} artwork={artwork} />
+              <ArtworkStatus like={like} />
 
               {/* Display Artwork Tags */}
               <div className="w-full h-auto flex flex-row flex-wrap mt-5">

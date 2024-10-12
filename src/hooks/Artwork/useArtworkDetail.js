@@ -3,13 +3,11 @@ import { useState, useEffect } from 'react';
 import artworkDetailService from '../../services/artworkDetailService';
 import userServiceById from '../../services/userServiceById';
 import galleryByUserService from '../../services/galleryByUserService';
-import fetchFollowerCount from '../../services/follow/fetchFollowerCount';
 
 const useArtworkDetail = (id) => {
   const [artwork, setArtwork] = useState([]);
   const [user, setUser] = useState({});
   const [userArt, setUserArt] = useState([]);
-  const [follower, setFollower] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,17 +32,7 @@ const useArtworkDetail = (id) => {
     if (id) fetchData();
   }, [id]);
 
-  useEffect(() => {
-    const fetchFollower = async () => {
-      if (artwork?.user_id) {
-        const followerCount = await fetchFollowerCount(artwork.user_id);
-        setFollower(followerCount);
-      }
-    };
-    fetchFollower();
-  }, [artwork]);
-
-  return { artwork, user, userArt, follower, loading };
+  return { artwork, user, userArt, loading };
 };
 
 export default useArtworkDetail;

@@ -29,54 +29,61 @@ const RegisterView = () => {
     event.preventDefault();
 
     try {
-      // Sign up the user using Supabase Auth
-      const { user, session, error } = await supabaseClient.auth.signUp(
-        {
-          email: formData.email,
-          password: formData.password,
-        },
-        {
-          redirectTo: 'http://localhost:3000', // You can set the redirect URL here (for after login).
-        }
-      );
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
 
       if (error) {
         throw error;
-      }
-
-      if (session) {
-        console.log('User session:', session);
-        alert('User registered without email confirmation required.');
-      }
-
-      // Check if user is successfully registered
-      if (user) {
-        console.log('User signed up:', user);
-
-        // Insert user information into the custom user table
-        const { data, error: dbError } = await supabaseClient
-          .from('user') // Replace with your actual table name
-          .insert([
-            {
-              user_id: user.id, // Link to the auth user by ID
-              email: formData.email,
-            },
-          ]);
-
-        if (dbError) {
-          console.error('Error inserting into user table:', dbError.message);
-          throw dbError; // Rethrow to catch in the outer error handler
-        }
-
-        console.log('User data successfully inserted into custom table:', data);
-
-        alert('Registration successful! Please check your email to confirm.');
       }
     } catch (error) {
       console.error('Error:', error.message);
       alert(error.message);
     }
   };
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     const { data, error } = await supabaseClient.auth.signUp({
+  //       email: formData.email,
+  //       password: formData.password,
+  //     });
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     // Check if user is successfully registered
+  //     if (user) {
+  //       console.log('User signed up:', user);
+
+  //       // Insert user information into the custom user table
+  //       const { data, error: dbError } = await supabaseClient
+  //         .from('user') // Replace with your actual table name
+  //         .insert([
+  //           {
+  //             user_id: user.id, // Link to the auth user by ID
+  //             email: formData.email,
+  //           },
+  //         ]);
+
+  //       if (dbError) {
+  //         console.error('Error inserting into user table:', dbError.message);
+  //         throw dbError; // Rethrow to catch in the outer error handler
+  //       }
+
+  //       console.log('User data successfully inserted into custom table:', data);
+
+  //       alert('Registration successful! Please check your email to confirm.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error.message);
+  //     alert(error.message);
+  //   }
+  // };
 
   return (
     <div className="w-full h-lvh bg-dark-primary-theme grid place-items-center">

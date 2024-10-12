@@ -7,10 +7,6 @@ const userServiceById = async (id) => {
     .select('*')
     .eq('id', id);
 
-  const { data: user, err } = await supabaseClient.from('user').select('*');
-
-  console.log('user:', user);
-
   if (error) {
     console.error('Error fetching users:', error);
     return null;
