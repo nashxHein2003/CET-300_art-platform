@@ -48,7 +48,7 @@ const ArtworkDetail = () => {
               <ArtworkHeader user={user} artwork={artwork} />
               <ArtworkStatus like={like} />
 
-              {/* Display Artwork Tags */}
+              {/* Artwork Tag */}
               <div className="w-full h-auto flex flex-row flex-wrap mt-5">
                 {artworkTags.map((tag) => (
                   <span
@@ -58,6 +58,13 @@ const ArtworkDetail = () => {
                     {tag.tag_name}
                   </span>
                 ))}
+              </div>
+
+              {/* Description */}
+              <div className="w-full h-auto mt-10">
+                <span className="text-white text-sm font-light">
+                  {artwork.description}
+                </span>
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@ import { supabaseClient } from '../supaBase';
 
 const fetchArtTags = async (artworkId) => {
   const { data: tags, error: tagError } = await supabaseClient
-    .from('artwork_tags')
+    .from('artwork_tag')
     .select('*')
     .eq('artwork_id', artworkId);
 
