@@ -16,6 +16,8 @@ const useFollower = (userId) => {
     fetchFollower();
   }, [userId]);
 
+  console.log('follwer:', follower);
+
   return { follower, loading };
 };
 

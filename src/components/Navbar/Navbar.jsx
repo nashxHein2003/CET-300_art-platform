@@ -42,49 +42,51 @@ const Navbar = ({ toggleSidebar }) => {
           </>
         ) : null}
 
-        <button
-          className={`relative group mx-5 px-3 py-2 bg-dark-lighter-theme rounded-lg`}
-          onClick={() => {
-            if (token !== null) {
-              navigate('/userProfile');
-            }
-          }}
-          onMouseEnter={() => setIsVisible(true)}
-          onMouseLeave={() => setIsVisible(false)}
-        >
-          <FontAwesomeIcon
-            icon={faUser}
-            size="lg"
-            className="text-white group-hover:text-dark-primary"
-          />
+        {token !== null && (
+          <button
+            className={`relative group mx-5 px-3 py-2 bg-dark-lighter-theme rounded-lg`}
+            onClick={() => {
+              if (token !== null) {
+                navigate('/userProfile');
+              }
+            }}
+            onMouseEnter={() => setIsVisible(true)}
+            onMouseLeave={() => setIsVisible(false)}
+          >
+            <FontAwesomeIcon
+              icon={faUser}
+              size="lg"
+              className="text-white group-hover:text-dark-primary"
+            />
 
-          {token !== null && (
-            <div
-              className={`absolute top-12 right-0 w-72 space-y-2 overflow-hidden py-2 bg-dark-lighter-theme ease-in-out text-white rounded-lg transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-            >
-              {/* <button
-                className="w-full text-left text-lg font-bold px-4 py-3"
-                onClick={() => {
-                  if (token !== null) {
-                    navigate('/userProfile');
-                  }
-                }}
+            {token !== null && (
+              <div
+                className={`absolute top-12 right-0 w-72 space-y-2 overflow-hidden py-2 bg-dark-lighter-theme ease-in-out text-white rounded-lg transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
               >
-                {userInfo.username}
-              </button> */}
+                {/* <button
+                  className="w-full text-left text-lg font-bold px-4 py-3"
+                  onClick={() => {
+                    if (token !== null) {
+                      navigate('/userProfile');
+                    }
+                  }}
+                >
+                  {userInfo.username}
+                </button> */}
 
-              <ModalTab
-                text="Logout"
-                onClick={() => {
-                  clearToken();
-                  setTimeout(() => {
-                    navigate('/');
-                  }, 0);
-                }}
-              />
-            </div>
-          )}
-        </button>
+                <ModalTab
+                  text="Logout"
+                  onClick={() => {
+                    clearToken();
+                    setTimeout(() => {
+                      navigate('/');
+                    }, 0);
+                  }}
+                />
+              </div>
+            )}
+          </button>
+        )}
 
         <button className="w-auto flex items-center px-6 py-2 text-white text-sm bg-dark-primary transition-colors duration-20 ">
           <FontAwesomeIcon icon={faPlus} className="mr-2" />

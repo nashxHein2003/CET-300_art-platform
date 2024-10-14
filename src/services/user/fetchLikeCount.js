@@ -4,7 +4,7 @@ const fetchLikeCount = async (artworkId) => {
   console.log('Fetching like for artworkId:', artworkId);
 
   const { count, error } = await supabaseClient
-    .from('like')
+    .from('likes')
     .select('*', { count: 'exact' })
     .eq('artwork_id', artworkId);
 

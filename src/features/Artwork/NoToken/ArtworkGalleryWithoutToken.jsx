@@ -2,16 +2,12 @@ import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { fetchArt } from '../../../services/fetchArt';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../context/Auth/AuthContext';
-import { UserProvider, useUser } from '../../../context/User/UserContext';
 
-const ArtworkGallery = () => {
+const ArtworkGalleryWithoutToken = () => {
   const { token } = useAuth();
   const [art, setArt] = useState([]);
   const [loading, setLoading] = useState(true);
   const containerRef = useRef(null);
-
-  const { userInfo } = useUser();
-  console.log('user info from artowkr:', userInfo);
 
   useEffect(() => {
     const getArt = async () => {
@@ -110,4 +106,4 @@ const ArtworkGallery = () => {
   );
 };
 
-export default ArtworkGallery;
+export default ArtworkGalleryWithoutToken;
