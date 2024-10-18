@@ -50,8 +50,8 @@ const LoginView = () => {
     }
   };
   return (
-    <div className="w-full h-lvh bg-dark-primary-theme grid place-items-center">
-      <div className="w-1/2 h-5/6 bg-white flex flex-row">
+    <div className="w-full h-full bg-dark-primary-theme grid place-items-center py-10">
+      <div className="w-850 h-auto bg-white flex flex-row">
         <div className="relative w-1/2 bg-[url('https://cdn.mos.cms.futurecdn.net/SUzstJWywL5jvqDKB2K2dk.jpg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
@@ -65,14 +65,16 @@ const LoginView = () => {
           </Link>
 
           <div className="w-full px-5 flex flex-col">
-            <h1 className="text-4xl font-bold mb-10">Login CenturyArt</h1>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
+            <h1 className="text-3xl font-bold mb-6">
+              Login <span className="logo-text">CenturyArt</span>
+            </h1>
+            <form className="flex flex-col text-sm" onSubmit={handleSubmit}>
               <label htmlFor="title" className="text-sm font-bold">
                 Enter your Email
               </label>
               <input
                 type="email"
-                className="w-auto p-2 border mt-1 mb-3"
+                className="w-auto p-2 border mt-1 mb-3 text-xs"
                 name="email"
                 onChange={handleChange}
               />
@@ -81,7 +83,7 @@ const LoginView = () => {
               </label>
               <input
                 type="password"
-                className="w-full p-2 border mt-1 mb-3"
+                className="w-full p-2 border mt-1 mb-3 text-xs"
                 name="password"
                 onChange={handleChange}
               />
@@ -145,7 +147,7 @@ const LoginView = () => {
                 </button>
               </p>
 
-              <p className="text-xs font-normal text-gray-600 mt-12">
+              <p className="text-xs font-normal text-gray-600 mt-6">
                 By logging in to CenturyArt, I confirm that I have read and
                 agree to the CenturyArt Terms of Service, Privacy Policy, and to
                 receive emails and updates.
