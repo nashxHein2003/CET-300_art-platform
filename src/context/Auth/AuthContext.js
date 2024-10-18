@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
 
@@ -17,8 +18,8 @@ export const AuthProvider = ({ children }) => {
 
       if (decodedToken && decodedToken.email) {
         setUserEmail(decodedToken.email);
-        console.log('User email:', decodedToken.email);
-        console.log('User id:', decodedToken.sub);
+        setUserId(decodedToken.sub);
+        console.log(decodedToken);
       } else {
         console.error('Invalid token or missing email in token');
       }
@@ -32,7 +33,6 @@ export const AuthProvider = ({ children }) => {
 
     if (decodedToken && decodedToken.email) {
       setUserEmail(decodedToken.email);
-      console.log('User email set:', decodedToken.email);
     }
   };
 

@@ -29,48 +29,13 @@ const RegisterView = () => {
     event.preventDefault();
 
     try {
-      // Sign up the user using Supabase Auth
-      const { user, session, error } = await supabaseClient.auth.signUp(
-        {
-          email: formData.email,
-          password: formData.password,
-        },
-        {
-          redirectTo: 'http://localhost:3000', // You can set the redirect URL here (for after login).
-        }
-      );
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
 
       if (error) {
         throw error;
-      }
-
-      if (session) {
-        console.log('User session:', session);
-        alert('User registered without email confirmation required.');
-      }
-
-      // Check if user is successfully registered
-      if (user) {
-        console.log('User signed up:', user);
-
-        // Insert user information into the custom user table
-        const { data, error: dbError } = await supabaseClient
-          .from('user') // Replace with your actual table name
-          .insert([
-            {
-              user_id: user.id, // Link to the auth user by ID
-              email: formData.email,
-            },
-          ]);
-
-        if (dbError) {
-          console.error('Error inserting into user table:', dbError.message);
-          throw dbError; // Rethrow to catch in the outer error handler
-        }
-
-        console.log('User data successfully inserted into custom table:', data);
-
-        alert('Registration successful! Please check your email to confirm.');
       }
     } catch (error) {
       console.error('Error:', error.message);
@@ -78,9 +43,51 @@ const RegisterView = () => {
     }
   };
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     const { data, error } = await supabaseClient.auth.signUp({
+  //       email: formData.email,
+  //       password: formData.password,
+  //     });
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     // Check if user is successfully registered
+  //     if (user) {
+  //       console.log('User signed up:', user);
+
+  //       // Insert user information into the custom user table
+  //       const { data, error: dbError } = await supabaseClient
+  //         .from('user') // Replace with your actual table name
+  //         .insert([
+  //           {
+  //             user_id: user.id, // Link to the auth user by ID
+  //             email: formData.email,
+  //           },
+  //         ]);
+
+  //       if (dbError) {
+  //         console.error('Error inserting into user table:', dbError.message);
+  //         throw dbError; // Rethrow to catch in the outer error handler
+  //       }
+
+  //       console.log('User data successfully inserted into custom table:', data);
+
+  //       alert('Registration successful! Please check your email to confirm.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error.message);
+  //     alert(error.message);
+  //   }
+  // };
+
   return (
-    <div className="w-full h-lvh bg-dark-primary-theme grid place-items-center">
-      <div className="w-1/2 h-5/6 bg-white flex flex-row">
+    <div className="w-full h-full bg-dark-primary-theme grid place-items-center py-10">
+      <div className="w-850 h-auto bg-white flex flex-row">
         <div className="relative w-1/2 bg-[url('https://cdn.mos.cms.futurecdn.net/SUzstJWywL5jvqDKB2K2dk.jpg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
@@ -94,15 +101,17 @@ const RegisterView = () => {
           </Link>
 
           <div className="w-full px-5 flex flex-col">
-            <h1 className="text-4xl font-bold mb-10">Join CenturyArt</h1>
-            <form className="flex flex-col" onSubmit={handleSubmit}>
+            <h1 className="text-3xl font-bold mb-6">
+              Join <span className="logo-text">CenturyArt</span>
+            </h1>
+            <form className="flex flex-col text-sm" onSubmit={handleSubmit}>
               <label htmlFor="title" className="text-sm font-bold">
                 Add your Email
               </label>
               <input
                 type="email"
                 name="email"
-                className="w-auto p-2 border mt-1 mb-3"
+                className="w-auto p-2 border mt-1 mb-3 text-xs"
                 onChange={handleChange}
               />
               <label htmlFor="title" className="text-sm font-bold">
@@ -111,7 +120,7 @@ const RegisterView = () => {
               <input
                 type="password"
                 name="password"
-                className="w-full p-2 border mt-1 mb-3"
+                className="w-full p-2 border mt-1 mb-3 text-xs"
                 onChange={handleChange}
               />
               <div className="w-full flex flex-row mb-3  relative">
@@ -166,7 +175,7 @@ const RegisterView = () => {
                 </button>
               </p>
 
-              <p className="text-xs font-normal text-gray-600 mt-12">
+              <p className="text-xs font-normal text-gray-600 mt-6">
                 By joining CenturyArt, I confirm that I have read and agree to
                 the CenturyArt Terms of Service, Privacy Policy, and to receive
                 emails and updates.

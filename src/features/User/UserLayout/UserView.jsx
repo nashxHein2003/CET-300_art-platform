@@ -1,5 +1,5 @@
 import React from 'react';
-import AppLayout from '../../../components/ Layout/AppLayout';
+import AppLayout from '../../../components/Layout/AppLayout';
 import Navbar from '../../../components/Navbar/Navbar';
 import SideBar from '../../../components/Sidebar/SideBar';
 import useSideBarState from '../../../hooks/useSideBarState';

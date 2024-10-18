@@ -12,16 +12,15 @@ import {
   supabaseCoverImageUrl,
 } from '../../../services/supaBase';
 import { v4 as uuidv4 } from 'uuid';
+import useFollower from '../../../hooks/User/useFollower';
 
 const UserProfile = () => {
   const { userEmail } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const { follower } = useFollower(userInfo?.id ?? null);
 
-  console.log('UserProfile', userEmail);
-
-  // Memoized function to fetch user info
   const getUserInfo = useCallback(async () => {
     if (userEmail) {
       setLoading(true);
@@ -110,6 +109,10 @@ const UserProfile = () => {
               </h1>
               <span className="text-white text-lg font-light">
                 {userInfo.known_as}
+              </span>
+
+              <span className="text-white text-sm font-light">
+                {follower} Followers
               </span>
             </div>
             {userInfo.cover_url === null && (

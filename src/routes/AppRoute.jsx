@@ -5,6 +5,7 @@ import LoginView from '../features/Auth/Login/LoginView';
 import RegisterView from '../features/Auth/Register/RegisterView';
 import ArtworkDetail from '../features/Artwork/ArtworkDetail/ArtworkDetail';
 import UserView from '../features/User/UserLayout/UserView';
+import Collection from '../features/Collection/Collection';
 
 const AppRoute = () => {
   return (
@@ -15,6 +16,7 @@ const AppRoute = () => {
         <Route path="/register" element={<RegisterView />} />
         <Route path="/artworkDetail/:id" element={<ArtworkDetail />} />
         <Route path="/userProfile" element={<UserView />} />
+        <Route path="/collection" element={<Collection />} />
       </Routes>
     </Router>
   );
