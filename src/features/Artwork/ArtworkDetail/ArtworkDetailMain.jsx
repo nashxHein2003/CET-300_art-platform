@@ -21,7 +21,7 @@ const ArtworkDetailMain = ({ userInfo }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { control, toggleSidebar } = useSideBarState();
-  const { artwork, user, userArt, follower, loading } = useArtworkDetail(id);
+  const { artwork, user, userArt, loading } = useArtworkDetail(id);
   const { token } = useAuth();
 
   const {
