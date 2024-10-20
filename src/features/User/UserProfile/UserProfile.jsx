@@ -10,15 +10,18 @@ import CoverImageUploadModal from './CoverImageUploadModal';
 import {
   supabaseClient,
   supabaseCoverImageUrl,
+  supabaseProfileImageUrl,
 } from '../../../services/supaBase';
 import { v4 as uuidv4 } from 'uuid';
 import useFollower from '../../../hooks/User/useFollower';
+import ProfileImageUploadModal from './ProfileImageUploadModal';
 
 const UserProfile = () => {
   const { userEmail } = useAuth();
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [profileModal, setProfileModal] = useState(false);
   const { follower } = useFollower(userInfo?.id ?? null);
 
   const getUserInfo = useCallback(async () => {
@@ -74,6 +77,40 @@ const UserProfile = () => {
     updateCoverImage(userInfo.user_id, `cover_image.jpg`);
   };
 
+  const handleProfileImage = async (file) => {
+    const filePath = `${userInfo.user_id}/profile_image.jpg`;
+    if (!userInfo) return;
+
+    const { data, error } = await supabaseClient.storage
+      .from('profile_image')
+      .upload(filePath, file, { upsert: true });
+
+    if (error) {
+      console.error('Error uploading image:', error);
+      return;
+    }
+
+    // Update the cover image in the user table
+    const updateProfileImage = async (userId, imagePath) => {
+      const imageUrl = `${supabaseProfileImageUrl}/profile_image/${userId}/${imagePath}`;
+      const { data, error } = await supabaseClient
+        .from('user')
+        .update({ profile_url: imageUrl })
+        .match({ user_id: userId });
+
+      if (error) {
+        console.error('Error updating profile image:', error);
+      } else {
+        console.log('Profile image updated successfully:', data);
+
+        // Refresh user info after a successful upload
+        await getUserInfo(); // Re-fetch user info to reflect updated cover image
+      }
+    };
+
+    updateProfileImage(userInfo.user_id, `profile_image.jpg`);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -93,7 +130,10 @@ const UserProfile = () => {
           }}
         >
           <div className="absolute bottom-0 w-full flex flex-row py-10 px-16 items-center">
-            <Link className="w-32 h-32 rounded-xl overflow-hidden border-dark-primary border-1 border-double">
+            <button
+              className="w-32 h-32 rounded-xl overflow-hidden border-dark-primary border-1 border-double"
+              onClick={() => setProfileModal(true)}
+            >
               {userInfo.profile_url !== null ? (
                 <img
                   src={userInfo.profile_url}
@@ -102,7 +142,7 @@ const UserProfile = () => {
               ) : (
                 ''
               )}
-            </Link>
+            </button>
             <div className="flex flex-col flex-1 px-5 gap-2">
               <h1 className="text-white text-5xl font-bold">
                 {userInfo.username}
@@ -126,7 +166,7 @@ const UserProfile = () => {
             )}
           </div>
         </div>
-        <div className="w-full bg-dark-lighter-nav px-12">
+        {/* <div className="w-full bg-dark-lighter-nav px-12">
           <div className="inline-block p-6 space-x-16 text-white text-sm font-light">
             <button>Home</button>
             <button>Gallery</button>
@@ -135,7 +175,7 @@ const UserProfile = () => {
             <button>About</button>
             <button>Shop</button>
           </div>
-        </div>
+        </div> */}
 
         {/* This is for home tab */}
         <div className="flex-1 bg-dark-primary-theme flex flex-row">
@@ -152,6 +192,12 @@ const UserProfile = () => {
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
           onUpload={handleUpload}
+        />
+
+        <ProfileImageUploadModal
+          isOpen={profileModal}
+          onClose={() => setProfileModal(false)}
+          onUpload={handleProfileImage}
         />
       </div>
     </>

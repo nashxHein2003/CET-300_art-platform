@@ -7,7 +7,7 @@ import {
   GoogleIcon,
 } from '../../../components/Icons/Icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { supabaseClient } from './../../../services/supaBase';
+import { supabaseAdmin, supabaseClient } from './../../../services/supaBase';
 
 const RegisterView = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const RegisterView = () => {
     event.preventDefault();
 
     try {
-      const { data, error } = await supabaseClient.auth.signUp({
+      const { data, error } = await supabaseAdmin.auth.signUp({
         email: formData.email,
         password: formData.password,
       });

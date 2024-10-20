@@ -74,6 +74,7 @@ const ArtworkDetailMain = ({ userInfo }) => {
           </div>
         </div>
         <UserGallery userArt={userArt} user={user} />
+        {/* i want to full all left height here by black color */}
       </div>
     </AppLayout>
   );
