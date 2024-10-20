@@ -10,5 +10,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabaseCoverImageUrl = `https://${supabaseUrl.split('//')[1]}/storage/v1/object/public`;
+export const supabaseProfileImageUrl = `https://${supabaseUrl.split('//')[1]}/storage/v1/object/public`;
+
 export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);

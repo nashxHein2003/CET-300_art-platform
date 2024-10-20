@@ -2,9 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { faCloudArrowDown } from '@fortawesome/free-solid-svg-icons/faCloudArrowDown';
+import { useAuth } from '../../context/Auth/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ImageDownloadButton = ({ imageUrl }) => {
   console.log('image:', imageUrl);
+
+  const { token } = useAuth();
+  const navigate = useNavigate();
   const handleDownload = async () => {
     try {
       const response = await fetch(imageUrl, { mode: 'cors' });
@@ -42,7 +47,7 @@ const ImageDownloadButton = ({ imageUrl }) => {
     // >
     //   Download Image
     // </button>
-    <button onClick={handleDownload}>
+    <button onClick={token ? handleDownload : () => navigate('/login')}>
       <FontAwesomeIcon
         icon={faCloudArrowDown}
         className="text-white hover:text-dark-primary"

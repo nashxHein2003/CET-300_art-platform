@@ -11,7 +11,7 @@ const ArtworkHeader = ({ user, artwork }) => {
             <img
               src={user[0].profile_url || '/default-profile.png'}
               alt="User Profile"
-              className="h-full object-cover"
+              className="w-full h-full object-cover"
             />
           </Link>
           <div className="flex-1 flex flex-col">

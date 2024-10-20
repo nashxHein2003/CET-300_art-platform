@@ -30,8 +30,6 @@ const Navbar = ({ toggleSidebar }) => {
       fetchUser();
     }
   }, [userEmail]);
-  //const { userInfo } = useUser();
-  //console.log('User info from nav', userInfo);
 
   const handleUpload = async (file) => {};
   return (
