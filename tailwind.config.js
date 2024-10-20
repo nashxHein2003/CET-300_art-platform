@@ -12,7 +12,15 @@ module.exports = {
         750: '750px',
         850: '850px',
         900: '900px',
+        1000: '1000px',
+        1100: '1100px',
         1200: '1200px',
+      },
+      maxWidth: {
+        1200: '1200px',
+      },
+      minWidth: {
+        900: '900px',
       },
       height: {
         400: '400px',
@@ -36,6 +44,7 @@ module.exports = {
         'dark-lighter-nav': '#1f1f1f',
         'dark-primary-hover': '#ff8c6f2c',
         'dark-primary': '#ff4500',
+        'dark-gray': '#252525',
       },
       textColor: {
         'dark-primary': '#ff4500',

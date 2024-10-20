@@ -155,13 +155,21 @@ const UserProfile = () => {
                 {follower} Followers
               </span>
             </div>
-            {userInfo.cover_url === null && (
+            {userInfo.cover_url === null ? (
               <button
                 className="w-auto flex items-center px-4 py-2 text-white bg-dark-primary rounded-3xl transition-colors duration-20 "
                 onClick={() => setModalOpen(true)}
               >
                 <FontAwesomeIcon icon={faImage} className="mr-2" />
                 Add cover image
+              </button>
+            ) : (
+              <button
+                className="w-auto flex items-center px-4 py-2 text-white bg-dark-primary rounded-3xl transition-colors duration-20 "
+                onClick={() => setModalOpen(true)}
+              >
+                <FontAwesomeIcon icon={faImage} className="mr-2" />
+                Change cover image
               </button>
             )}
           </div>

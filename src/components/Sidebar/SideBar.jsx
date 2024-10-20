@@ -16,8 +16,8 @@ const SideBar = ({ control }) => {
 
   const menuItems = [
     { icon: faHome, url: '/', title: 'Home' },
-    { icon: faEye, url: '/collection', title: 'Collections' },
-    { icon: faChartArea, url: '/activity', title: 'Activity' },
+    //{ icon: faEye, url: '/collection', title: 'Collections' },
+    //{ icon: faChartArea, url: '/activity', title: 'Activity' },
   ];
 
   return (

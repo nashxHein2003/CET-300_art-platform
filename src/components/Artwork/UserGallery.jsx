@@ -3,34 +3,12 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuth } from '../../context/Auth/AuthContext';
-import { supabaseClient } from '../../services/supaBase';
 import addFollowService from '../../services/interactions/addFollowService';
 import removeFollowService from '../../services/interactions/removeFollowService';
+import { supabaseClient } from '../../services/supaBase';
 
-const UserGallery = ({ userArt, user = { known_as: 'Unknown User' } }) => {
-  const { userEmail } = useAuth();
-  const [userId, setUserId] = useState(null);
+const UserGallery = ({ userArt, user, userId }) => {
   const [isFollowing, setIsFollowing] = useState(false);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      if (userEmail !== null) {
-        const { data, error } = await supabaseClient
-          .from('user')
-          .select('id')
-          .eq('email', userEmail);
-
-        if (error) {
-          console.error('Error fetching user info:', error);
-        } else if (data.length > 0) {
-          setUserId(data[0].id);
-        }
-      }
-    };
-
-    fetchUserInfo();
-  }, [userEmail]);
 
   useEffect(() => {
     const checkIfFollowing = async () => {
@@ -66,12 +44,11 @@ const UserGallery = ({ userArt, user = { known_as: 'Unknown User' } }) => {
     }
   };
 
-  // Limit the userArt to a maximum of 6 items
-  const displayedArt = userArt.slice(0, 9);
+  const displayedArt = userArt.slice(0, 9); // Limit to 9 items
 
   return (
-    <div className="w-96 max-h-max flex flex-col bg-dark-primary-theme items-center p-5">
-      <div className="w-full h-auto flex flex-row justify-between items-center mb-5">
+    <div className="w-96 flex-grow flex flex-col bg-dark-primary-theme p-5">
+      <div className="w-96 h-auto flex flex-row justify-between items-center mb-5">
         <Link className="text-white font-bold text-lg hover:underline">
           More by {user[0]?.known_as || 'Unknown User'}
         </Link>
@@ -88,18 +65,17 @@ const UserGallery = ({ userArt, user = { known_as: 'Unknown User' } }) => {
         </button>
       </div>
 
-      <div className="w-full h-auto grid grid-cols-3 gap-2">
+      <div className="w-96 h-auto grid grid-cols-3 gap-2 ">
         {displayedArt.map((art) => (
           <Link key={art.artwork_id} to={`/artworkDetail/${art.artwork_id}`}>
             <img
               src={art.image_url}
               alt={`Art piece #${art.artwork_id}`}
-              className="w-full h-24 object-cover transition-transform duration-300 ease-in-out hover:brightness-50"
+              className="w-full h-32 object-cover transition-transform duration-300 ease-in-out hover:brightness-50"
             />
           </Link>
         ))}
       </div>
-      <div className="w-full max-h-max bg-dark-primary-theme"></div>
     </div>
   );
 };
@@ -114,6 +90,7 @@ UserGallery.propTypes = {
   user: PropTypes.shape({
     known_as: PropTypes.string,
   }),
+  userId: PropTypes.number, // Accept userId as a prop
 };
 
 export default UserGallery;
