@@ -1,8 +1,6 @@
 import { supabaseClient } from '../supaBase';
 
 const fetchLikeCount = async (artworkId) => {
-  console.log('Fetching like for artworkId:', artworkId);
-
   const { count, error } = await supabaseClient
     .from('likes')
     .select('*', { count: 'exact' })
@@ -12,8 +10,6 @@ const fetchLikeCount = async (artworkId) => {
     console.error('Error fetching like count:', error);
     return null;
   }
-
-  console.log('Returned like count:', count);
   return count;
 };
 
