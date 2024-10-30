@@ -68,10 +68,8 @@ const UserProfile = () => {
         console.error('Error updating cover image:', error);
       } else {
         console.log('Cover image updated successfully:', data);
-
-        // Refresh user info after a successful upload
-        await getUserInfo(); // Re-fetch user info to reflect updated cover image
       }
+      await getUserInfo();
     };
 
     updateCoverImage(userInfo.user_id, `cover_image.jpg`);

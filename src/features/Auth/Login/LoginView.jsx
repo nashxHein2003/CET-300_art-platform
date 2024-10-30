@@ -110,11 +110,11 @@ const LoginView = () => {
               </button>
             </form>
 
-            <div className="relative w-full flex flex-row justify-center items-center mb-3 mt-6">
+            {/* <div className="relative w-full flex flex-row justify-center items-center mb-3 mt-6">
               <div className="flex-1 border-t border-gray-300"></div>
               <span className="bg-white text-sm px-4 text-gray-500">or</span>
               <div className="flex-1 border-t border-gray-300"></div>
-            </div>
+            </div> */}
 
             <div className="flex flex-col items-start">
               <p className="text-xs font-normal flex items-center">
