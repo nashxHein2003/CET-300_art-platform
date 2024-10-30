@@ -50,8 +50,8 @@ const LoginView = () => {
     }
   };
   return (
-    <div className="w-full h-full bg-dark-primary-theme grid place-items-center py-10">
-      <div className="w-850 h-auto bg-white flex flex-row">
+    <div className="w-full h-lvh bg-dark-primary-theme flex items-center justify-center">
+      <div className="w-700 h-auto bg-white flex flex-row">
         <div className="relative w-1/2 bg-[url('https://cdn.mos.cms.futurecdn.net/SUzstJWywL5jvqDKB2K2dk.jpg')] bg-cover bg-center">
           <div className="absolute inset-0 bg-black opacity-50"></div>
         </div>
@@ -87,7 +87,7 @@ const LoginView = () => {
                 name="password"
                 onChange={handleChange}
               />
-              <div className="w-full flex flex-row mb-3  relative">
+              {/* <div className="w-full flex flex-row mb-3  relative">
                 <label className="inline-flex items-center">
                   <input
                     type="checkbox"
@@ -101,7 +101,7 @@ const LoginView = () => {
                     Forgot username or password?
                   </span>
                 </label>
-              </div>
+              </div> */}
               <button
                 className="w-full p-3 bg-dark-primary text-sm text-white"
                 type="submit"
@@ -117,27 +117,6 @@ const LoginView = () => {
             </div>
 
             <div className="flex flex-col items-start">
-              <button className="relative flex items-center w-full p-3 border mb-3">
-                <GoogleIcon className="absolute left-0" />
-                <span className="w-full text-center text-sm">
-                  Login with Google
-                </span>
-              </button>
-
-              <button className="relative flex items-center w-full p-3 border mb-3">
-                <FacebookIcon className="absolute left-0" />
-                <span className="w-full text-center text-sm">
-                  Login with Facebook
-                </span>
-              </button>
-
-              <button className="relative flex items-center w-full p-3 border mb-3">
-                <AppleIcon className="absolute left-0" />
-                <span className="w-full text-center text-sm">
-                  Login with Apple
-                </span>
-              </button>
-
               <p className="text-xs font-normal flex items-center">
                 To be part of community
                 <button className="ml-2" onClick={() => navigate('/register')}>

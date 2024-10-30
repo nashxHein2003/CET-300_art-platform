@@ -10,8 +10,6 @@ const fetchArtTags = async (artworkId) => {
     console.log('Error fetching artwork tags:', tagError);
     return null;
   }
-
-  console.log('No tags found for the artwork');
   return tags;
 };
 

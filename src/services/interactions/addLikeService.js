@@ -1,9 +1,6 @@
 import { supabaseClient } from '../supaBase';
 
 const addLikeService = async (artworkId, userEmail) => {
-  console.log('Checking if user has already liked the artwork...');
-
-  // Step 1: Check if the user has already liked the artwork
   const { data: existingLike, error: checkError } = await supabaseClient
     .from('likes')
     .select('*')
@@ -20,13 +17,10 @@ const addLikeService = async (artworkId, userEmail) => {
     return { error: 'You have already liked this artwork.' };
   }
 
-  // Step 2: Insert a new like if it doesn't exist
-  console.log('Adding like for artworkId:', artworkId);
-
   const { data, error } = await supabaseClient.from('likes').insert([
     {
       artwork_id: artworkId,
-      liked: userEmail, // Changed 'liked' to 'user_email' for consistency
+      liked: userEmail,
     },
   ]);
 
