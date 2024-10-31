@@ -19,12 +19,12 @@ import { useAuth } from '../../../context/Auth/AuthContext';
 import CommentSection from '../../../components/Artwork/CommentSection';
 import { supabaseClient } from '../../../services/supaBase';
 
-const ArtworkDetailMain = ({ userInfo }) => {
+const ArtworkDetailMain = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { control, toggleSidebar } = useSideBarState();
   const { artwork, user, userArt, loading } = useArtworkDetail(id);
-  const { token, userEmail } = useAuth(); // Accessing the email here
+  const { userEmail } = useAuth();
 
   const {
     artworkTags,
@@ -33,21 +33,20 @@ const ArtworkDetailMain = ({ userInfo }) => {
   } = useArtworkTag(artwork.artwork_id);
   const { like } = useArtworkLike(artwork.artwork_id);
 
-  const [currentUser, setCurrentUser] = useState(null); // Store the whole user object
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // Fetch the user info based on the user's email
   useEffect(() => {
     const fetchUserInfo = async () => {
       if (userEmail) {
         const { data, error } = await supabaseClient
           .from('user')
-          .select('*') // Select all fields
+          .select('*')
           .eq('email', userEmail);
 
         if (error) {
           console.error('Error fetching user info:', error);
         } else if (data.length > 0) {
-          setCurrentUser(data[0]); // Store the whole user object
+          setCurrentUser(data[0]);
         }
       }
     };
@@ -72,7 +71,6 @@ const ArtworkDetailMain = ({ userInfo }) => {
               <ArtworkHeader user={user} artwork={artwork} />
               <ArtworkStatus like={like} />
 
-              {/* Artwork Tags */}
               <div className="w-full h-auto flex flex-row flex-wrap mt-5">
                 {artworkTags.map((tag) => (
                   <span
@@ -83,8 +81,6 @@ const ArtworkDetailMain = ({ userInfo }) => {
                   </span>
                 ))}
               </div>
-
-              {/* Description */}
               <div className="w-full h-auto mt-10 mb-10">
                 <span className="text-white text-sm font-light">
                   {artwork.description}
@@ -96,11 +92,7 @@ const ArtworkDetailMain = ({ userInfo }) => {
           </div>
         </div>
 
-        {/* Pass only the userId to UserGallery */}
-
         <UserGallery userArt={userArt} user={user} userId={currentUser?.id} />
-
-        {/* Fill the left height with black color */}
       </div>
     </AppLayout>
   );

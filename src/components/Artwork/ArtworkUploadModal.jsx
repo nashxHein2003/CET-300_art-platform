@@ -25,14 +25,13 @@ const ArtworkUploadModal = ({ isOpen, onClose, onUpload, userId }) => {
     setIsUploading(true);
 
     try {
-      // Step 1: Upload the file to Supabase Storage
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `artworks/${fileName}`;
 
       let { data: storageData, error: storageError } =
         await supabaseClient.storage
-          .from('artwork_bucker') // Replace with your actual storage bucket
+          .from('artwork_bucker')
           .upload(filePath, file);
 
       if (storageError) {
@@ -46,12 +45,11 @@ const ArtworkUploadModal = ({ isOpen, onClose, onUpload, userId }) => {
 
       console.log(userId[0].id);
 
-      // Step 2: Insert the metadata into the 'artwork' table
       const { data: insertData, error: insertError } = await supabaseClient
         .from('artwork')
         .insert([
           {
-            user_id: userId[0].id, // Assuming you pass the user ID as a prop
+            user_id: userId[0].id,
             title,
             description,
             image_url: imageUrl,
@@ -64,9 +62,8 @@ const ArtworkUploadModal = ({ isOpen, onClose, onUpload, userId }) => {
         return;
       }
 
-      const artworkId = insertData[0].artwork_id; // Get the inserted artwork_id
+      const artworkId = insertData[0].artwork_id;
 
-      // Step 3: Insert tags into 'artwork_tags' table
       const tagsArray = tags.split(',').map((tag) => tag.trim());
       if (tagsArray.length > 0) {
         const tagInserts = tagsArray.map((tag) => ({
@@ -83,7 +80,6 @@ const ArtworkUploadModal = ({ isOpen, onClose, onUpload, userId }) => {
         }
       }
 
-      // Step 4: Call the onUpload callback with the uploaded data
       onUpload({
         file,
         title,
@@ -92,13 +88,12 @@ const ArtworkUploadModal = ({ isOpen, onClose, onUpload, userId }) => {
         tags: tagsArray,
       });
 
-      // Reset the form
       setFile(null);
       setTitle('');
       setDescription('');
       setTags('');
 
-      onClose(); // Close the modal
+      onClose();
     } catch (error) {
       console.error('Error during upload: ', error);
     } finally {
@@ -171,14 +166,14 @@ const ArtworkUploadModal = ({ isOpen, onClose, onUpload, userId }) => {
               type="button"
               className="mr-2 px-4 py-2 bg-gray-300 text-gray-700 rounded"
               onClick={onClose}
-              disabled={isUploading} // Disable button while uploading
+              disabled={isUploading}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded"
-              disabled={isUploading} // Disable button while uploading
+              disabled={isUploading}
             >
               {isUploading ? 'Uploading...' : 'Upload'}
             </button>

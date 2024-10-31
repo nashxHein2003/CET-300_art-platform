@@ -85,17 +85,6 @@ const Navbar = ({ toggleSidebar }) => {
                 <div
                   className={`absolute top-12 right-0 w-72 space-y-2 overflow-hidden py-2 bg-dark-lighter-theme ease-in-out text-white rounded-lg transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
                 >
-                  {/* <button
-                  className="w-full text-left text-lg font-bold px-4 py-3"
-                  onClick={() => {
-                    if (token !== null) {
-                      navigate('/userProfile');
-                    }
-                  }}
-                >
-                  {userInfo.username}
-                </button> */}
-
                   <ModalTab
                     text="Logout"
                     onClick={() => {

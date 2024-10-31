@@ -62,7 +62,6 @@ const CoverImageUploadModal = ({ isOpen, onClose, onUpload }) => {
   );
 };
 
-// Prop Types validation
 CoverImageUploadModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

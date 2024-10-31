@@ -11,20 +11,6 @@ const useArtworkByTag = (tagName) => {
       try {
         setLoading(true);
         const ids = await fetchArtworkByTagName(tagName);
-        // id is in list, by many id. i want to make it map and fetch image by id, one by one from fetchArtworkById(id)
-
-        // const arts = await Promise.all(
-        //   id.map(async (artworkId) => {
-        //     console.log('artworkId:', artworkId);
-        //     const artworkData = await fetchArtworkById(artworkId);
-
-        //     return artworkData;
-        //   })
-        // );
-
-        // const fetchedArtworks = await Promise.all(ids.map(fetchArtworkById()));
-        // setArtwork(fetchedArtworks.flat());
-
         if (Array.isArray(ids) && ids.length > 0) {
           const image = await Promise.all(
             ids.map(async (arts) => {

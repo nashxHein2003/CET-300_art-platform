@@ -24,12 +24,11 @@ const ArtUploadModal = ({ isOpen, onClose, onUpload }) => {
         description,
         tags: tags.split(',').map((tag) => tag.trim()),
       });
-      // Reset form fields
       setFile(null);
       setTitle('');
       setDescription('');
       setTags('');
-      onClose(); // Close the modal
+      onClose();
     }
   };
 

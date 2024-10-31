@@ -1,14 +1,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import {
-  AppleIcon,
-  FacebookIcon,
-  GoogleIcon,
-} from '../../../components/Icons/Icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabaseClient } from '../../../services/supaBase';
-import PropTypes from 'prop-types';
 import { useAuth } from '../../../context/Auth/AuthContext';
 
 const LoginView = () => {
@@ -87,21 +81,6 @@ const LoginView = () => {
                 name="password"
                 onChange={handleChange}
               />
-              {/* <div className="w-full flex flex-row mb-3  relative">
-                <label className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox h-3 w-3 text-blue-600"
-                  />
-                  <span className="ml-2 text-sm text-black">
-                    Keep me logged in
-                  </span>
-
-                  <span className="absolute right-0 text-xs text-gray-600 underline">
-                    Forgot username or password?
-                  </span>
-                </label>
-              </div> */}
               <button
                 className="w-full p-3 bg-dark-primary text-sm text-white"
                 type="submit"
@@ -110,13 +89,7 @@ const LoginView = () => {
               </button>
             </form>
 
-            {/* <div className="relative w-full flex flex-row justify-center items-center mb-3 mt-6">
-              <div className="flex-1 border-t border-gray-300"></div>
-              <span className="bg-white text-sm px-4 text-gray-500">or</span>
-              <div className="flex-1 border-t border-gray-300"></div>
-            </div> */}
-
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start mt-4">
               <p className="text-xs font-normal flex items-center">
                 To be part of community
                 <button className="ml-2" onClick={() => navigate('/register')}>
@@ -138,9 +111,5 @@ const LoginView = () => {
     </div>
   );
 };
-
-// LoginView.propTypes = {
-//   setToken: PropTypes.func.isRequired,
-// };
 
 export default LoginView;

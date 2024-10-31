@@ -27,12 +27,12 @@ export const UserProvider = ({ children }) => {
       } catch (error) {
         console.error('Error fetching user info:', error);
       } finally {
-        setLoading(false); // Stop loading in both success and error scenarios
+        setLoading(false);
       }
     };
 
     getUserInfo();
-  }, [userEmail]); // Only run if userEmail changes
+  }, [userEmail]);
 
   return (
     <UserContext.Provider value={{ userInfo, loading }}>

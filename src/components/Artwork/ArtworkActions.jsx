@@ -9,7 +9,7 @@ import { useAuth } from '../../context/Auth/AuthContext';
 const ArtworkActions = ({ artwork, user }) => {
   console.log('image url:', artwork.image_url);
 
-  const { token, userEmail } = useAuth();
+  const { userEmail } = useAuth();
 
   const onChange = async () => {
     console.log('User Email for actions:', userEmail);
@@ -19,12 +19,10 @@ const ArtworkActions = ({ artwork, user }) => {
 
       if (result) {
         console.log('Like added successfully:', result);
-        // Optionally: update the UI or state if necessary, e.g., increment a like count
       } else {
         console.warn('No data returned from addLikeService');
       }
     } catch (error) {
-      // Handle any errors that occur during the like operation
       console.error('Error adding like:', error);
     }
   };
@@ -34,7 +32,7 @@ const ArtworkActions = ({ artwork, user }) => {
       <div className="flex flex-row">
         <button
           className="flex items-center py-2 mr-5 text-neutral-400 text-sm hover:text-dark-primary"
-          onClick={onChange} // Fix here: pass the function reference, not the immediate invocation
+          onClick={onChange}
         >
           <FontAwesomeIcon icon={faHeart} className="mr-2" />
           Favourites

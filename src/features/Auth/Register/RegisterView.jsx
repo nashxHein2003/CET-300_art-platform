@@ -1,13 +1,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import {
-  AppleIcon,
-  FacebookIcon,
-  GoogleIcon,
-} from '../../../components/Icons/Icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { supabaseAdmin, supabaseClient } from './../../../services/supaBase';
+import { supabaseClient } from './../../../services/supaBase';
 
 const RegisterView = () => {
   const navigate = useNavigate();
@@ -24,24 +19,6 @@ const RegisterView = () => {
       };
     });
   }
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   try {
-  //     const { data, error } = await supabaseAdmin.auth.signUp({
-  //       email: formData.email,
-  //       password: formData.password,
-  //     });
-
-  //     if (error) {
-  //       throw error;
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error.message);
-  //     alert(error.message);
-  //   }
-  // };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -135,13 +112,7 @@ const RegisterView = () => {
               </button>
             </form>
 
-            {/* <div className="relative w-full flex flex-row justify-center items-center mb-3 mt-6">
-              <div className="flex-1 border-t border-gray-300"></div>
-              <span className="bg-white text-sm px-4 text-gray-500">or</span>
-              <div className="flex-1 border-t border-gray-300"></div>
-            </div> */}
-
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start mt-4">
               <p className="text-xs font-normal flex items-center">
                 Already a member?
                 <button className="ml-2" onClick={() => navigate('/login')}>

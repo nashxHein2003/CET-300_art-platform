@@ -1,4 +1,3 @@
-// components/ArtworkActions.js
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
@@ -20,7 +19,7 @@ const ArtworkStatus = ({ like }) => (
 );
 
 ArtworkStatus.propTypes = {
-  like: PropTypes.number, // Use number instead of int
+  like: PropTypes.number,
 };
 
 export default ArtworkStatus;

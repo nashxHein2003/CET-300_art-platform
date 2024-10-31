@@ -26,7 +26,7 @@ const ProfileImageUploadModal = ({ isOpen, onClose, onUpload }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
       <div className="bg-dark-primary-theme text-white rounded-lg shadow-lg w-11/12 md:w-1/3 p-10 ">
-        <h2 className="text-lg font-bold mb-4">Upload Cover Image</h2>
+        <h2 className="text-lg font-bold mb-4">Upload Profile Image</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1" htmlFor="file">
@@ -62,7 +62,6 @@ const ProfileImageUploadModal = ({ isOpen, onClose, onUpload }) => {
   );
 };
 
-// Prop Types validation
 ProfileImageUploadModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

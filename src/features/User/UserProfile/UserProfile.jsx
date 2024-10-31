@@ -1,18 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../../../context/Auth/AuthContext';
 import fetchUserInfoByEmail from '../../../services/user/fetchUserInfoByEmail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import UserFeatured from '../UserFeatured/UserFeatured';
-import UserAbout from '../UserAbout/UserAbout';
 import CoverImageUploadModal from './CoverImageUploadModal';
 import {
   supabaseClient,
   supabaseCoverImageUrl,
   supabaseProfileImageUrl,
 } from '../../../services/supaBase';
-import { v4 as uuidv4 } from 'uuid';
 import useFollower from '../../../hooks/User/useFollower';
 import ProfileImageUploadModal from './ProfileImageUploadModal';
 
@@ -38,7 +35,6 @@ const UserProfile = () => {
     }
   }, [userEmail]);
 
-  // Fetch user info on component mount and whenever userEmail changes
   useEffect(() => {
     getUserInfo();
   }, [getUserInfo]);
@@ -56,7 +52,6 @@ const UserProfile = () => {
       return;
     }
 
-    // Update the cover image in the user table
     const updateCoverImage = async (userId, imagePath) => {
       const imageUrl = `${supabaseCoverImageUrl}/cover_image/${userId}/${imagePath}`;
       const { data, error } = await supabaseClient
@@ -88,7 +83,6 @@ const UserProfile = () => {
       return;
     }
 
-    // Update the cover image in the user table
     const updateProfileImage = async (userId, imagePath) => {
       const imageUrl = `${supabaseProfileImageUrl}/profile_image/${userId}/${imagePath}`;
       const { data, error } = await supabaseClient
@@ -100,9 +94,7 @@ const UserProfile = () => {
         console.error('Error updating profile image:', error);
       } else {
         console.log('Profile image updated successfully:', data);
-
-        // Refresh user info after a successful upload
-        await getUserInfo(); // Re-fetch user info to reflect updated cover image
+        await getUserInfo();
       }
     };
 
@@ -122,7 +114,7 @@ const UserProfile = () => {
         <div
           className="w-full h-80 relative"
           style={{
-            backgroundImage: `url(${userInfo.cover_url ?? ''})`,
+            backgroundImage: `url(${userInfo.cover_url ?? 'https://massagecareclinic.com/wp-content/uploads/2016/08/profile-icon.png'})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
           }}
@@ -172,25 +164,10 @@ const UserProfile = () => {
             )}
           </div>
         </div>
-        {/* <div className="w-full bg-dark-lighter-nav px-12">
-          <div className="inline-block p-6 space-x-16 text-white text-sm font-light">
-            <button>Home</button>
-            <button>Gallery</button>
-            <button>Favourites</button>
-            <button>Posts</button>
-            <button>About</button>
-            <button>Shop</button>
-          </div>
-        </div> */}
 
-        {/* This is for home tab */}
-        <div className="flex-1 bg-dark-primary-theme flex flex-row">
+        <div className="flex-1 bg-dark-primary-theme flex">
           <div className="flex-1 flex flex-col">
             <UserFeatured userId={userInfo.id} />
-          </div>
-
-          <div className="w-700 h-500">
-            <UserAbout userInfo={userInfo} />
           </div>
         </div>
 

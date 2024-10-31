@@ -6,8 +6,6 @@ import { useAuth } from '../../context/Auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const ImageDownloadButton = ({ imageUrl }) => {
-  console.log('image:', imageUrl);
-
   const { token } = useAuth();
   const navigate = useNavigate();
   const handleDownload = async () => {
@@ -28,7 +26,7 @@ const ImageDownloadButton = ({ imageUrl }) => {
 
       const link = document.createElement('a');
       link.href = objectUrl;
-      link.download = 'download.jpg'; // Set the file name for the download
+      link.download = 'download.jpg';
 
       document.body.appendChild(link);
       link.click();
@@ -41,12 +39,6 @@ const ImageDownloadButton = ({ imageUrl }) => {
   };
 
   return (
-    // <button
-    //   onClick={handleDownload}
-    //   className="bg-blue-500 text-white px-4 py-2 rounded"
-    // >
-    //   Download Image
-    // </button>
     <button onClick={token ? handleDownload : () => navigate('/login')}>
       <FontAwesomeIcon
         icon={faCloudArrowDown}

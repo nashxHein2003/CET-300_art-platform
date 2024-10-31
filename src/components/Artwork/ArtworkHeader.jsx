@@ -9,7 +9,10 @@ const ArtworkHeader = ({ user, artwork }) => {
         <>
           <Link className="w-14 h-14 rounded-md overflow-hidden mr-5">
             <img
-              src={user[0].profile_url || '/default-profile.png'}
+              src={
+                user[0].profile_url ||
+                'https://massagecareclinic.com/wp-content/uploads/2016/08/profile-icon.png'
+              }
               alt="User Profile"
               className="w-full h-full object-cover"
             />
@@ -47,7 +50,7 @@ ArtworkHeader.propTypes = {
     created_at: PropTypes.string.isRequired,
   }).isRequired,
   user: PropTypes.shape({
-    profile_url: PropTypes.string, // Optional if null is allowed
-    known_as: PropTypes.string, // Optional if null is allowed
+    profile_url: PropTypes.string,
+    known_as: PropTypes.string,
   }).isRequired,
 };

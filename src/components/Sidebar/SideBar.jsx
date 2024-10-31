@@ -8,17 +8,12 @@ const SideBar = ({ control }) => {
   const location = useLocation();
 
   const isHome = location.pathname === '/';
-  const isCollection = location.pathname === '/collection';
 
-  if (!isHome && !control.isExpanded && !isCollection) {
+  if (!isHome && !control.isExpanded) {
     return null;
   }
 
-  const menuItems = [
-    { icon: faHome, url: '/', title: 'Home' },
-    //{ icon: faEye, url: '/collection', title: 'Collections' },
-    //{ icon: faChartArea, url: '/activity', title: 'Activity' },
-  ];
+  const menuItems = [{ icon: faHome, url: '/', title: 'Home' }];
 
   return (
     <div

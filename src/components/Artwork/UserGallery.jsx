@@ -90,7 +90,7 @@ UserGallery.propTypes = {
   user: PropTypes.shape({
     known_as: PropTypes.string,
   }),
-  userId: PropTypes.number, // Accept userId as a prop
+  userId: PropTypes.number,
 };
 
 export default UserGallery;

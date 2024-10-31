@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import getCommentService from '../../services/interactions/getCommentService';
-import UserInfoByEmail from '../../services/user/userInfoByEmail'; // Import the user info function
+import UserInfoByEmail from '../../services/user/userInfoByEmail';
 import PropTypes from 'prop-types';
 import { supabaseClient } from '../../services/supaBase';
 import { useAuth } from '../../context/Auth/AuthContext';
@@ -12,7 +12,7 @@ const CommentSection = ({ artwork, currentUser }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newComment, setNewComment] = useState('');
-  const [commentUserData, setCommentUserData] = useState([]); // Initialize as an array
+  const [commentUserData, setCommentUserData] = useState([]);
 
   useEffect(() => {
     const getComments = async () => {
@@ -44,7 +44,7 @@ const CommentSection = ({ artwork, currentUser }) => {
   };
 
   const handleCommentSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
 
     if (!newComment.trim()) {
       alert('Please enter a comment.');
@@ -52,7 +52,6 @@ const CommentSection = ({ artwork, currentUser }) => {
     }
 
     try {
-      // Optimistically update the comment state
       const newCommentData = {
         email: currentUser.email,
         artwork_id: artwork.artwork_id,
@@ -62,21 +61,19 @@ const CommentSection = ({ artwork, currentUser }) => {
             profile_url: currentUser.profile_url,
             known_as: currentUser.known_as,
           },
-        ], // Add user info for display
+        ],
       };
 
       setCommentUserData((prevComments) => [...prevComments, newCommentData]);
-      setNewComment(''); // Clear the comment input
+      setNewComment('');
 
-      const { error } = await supabaseClient
-        .from('comment') // Assuming your table name is 'comment'
-        .insert([
-          {
-            email: currentUser.email,
-            artwork_id: artwork.artwork_id,
-            comment: newComment,
-          },
-        ]);
+      const { error } = await supabaseClient.from('comment').insert([
+        {
+          email: currentUser.email,
+          artwork_id: artwork.artwork_id,
+          comment: newComment,
+        },
+      ]);
 
       if (error) {
         throw error;
@@ -96,11 +93,13 @@ const CommentSection = ({ artwork, currentUser }) => {
         <span className="text-lg text-white">Comments</span>
       </div>
 
-      {/* Comment input section */}
       <div className="w-full h-auto flex flex-row gap-x-3 mb-3">
         <Link className="w-10 h-10 rounded-md overflow-hidden">
           <img
-            src={currentUser?.profile_url ?? ''}
+            src={
+              currentUser?.profile_url ??
+              'https://massagecareclinic.com/wp-content/uploads/2016/08/profile-icon.png'
+            }
             alt="User avatar"
             className="w-full h-full object-cover object-center"
           />
@@ -127,7 +126,6 @@ const CommentSection = ({ artwork, currentUser }) => {
         </button>
       </div>
 
-      {/* Comments display section */}
       {loading ? (
         <div>Loading...</div>
       ) : (
@@ -138,7 +136,10 @@ const CommentSection = ({ artwork, currentUser }) => {
           >
             <Link className="w-10 h-10 rounded-md overflow-hidden">
               <img
-                src={comment.userInfo[0].profile_url ?? '#'} // Display user profile picture or a placeholder
+                src={
+                  comment.userInfo[0].profile_url ??
+                  'https://massagecareclinic.com/wp-content/uploads/2016/08/profile-icon.png'
+                }
                 alt="User avatar"
                 className="w-full h-full object-cover object-center"
               />
@@ -163,7 +164,7 @@ CommentSection.propTypes = {
   currentUser: PropTypes.shape({
     profile_url: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    known_as: PropTypes.string.isRequired, // Add known_as to props
+    known_as: PropTypes.string.isRequired,
   }).isRequired,
 };
 

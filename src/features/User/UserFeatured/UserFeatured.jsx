@@ -34,7 +34,7 @@ const UserFeatured = ({ userId }) => {
             key={index}
             className="relative bg-dark-lighter-nav overflow-hidden"
             style={{
-              height: '240px',
+              height: '300px',
               flex: '1 0 auto',
               maxWidth: '700px',
             }}
